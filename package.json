@@ -1,0 +1,21 @@
+{
+  "name": "styled-components-breakpoint",
+  "version": "1.0.0-preview.1",
+  "description": "Utility function for using breakpoints with `styled-components`.",
+  "keywords": [
+    "react",
+    "styled-components",
+    "breakpoint",
+    "breakpoints",
+    "media",
+    "style",
+    "tablet",
+    "desktop"
+  ],
+  "repository": "jameslnewell/styled-components-breakpoint",
+  "files": ["index.js"],
+  "peerDependencies": {
+    "styled-components": "^1 || ^2"
+  },
+  "license": "MIT"
+}
