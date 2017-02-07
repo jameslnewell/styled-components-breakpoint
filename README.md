@@ -106,7 +106,7 @@ Wraps rules in a breakpoint.
 - `name` - A `string`. Must be the name of a configured breakpoint.
 - `breakpoints` - An `object`.
 
-> Example:
+##### Example:
 ```js
 import styled from 'styled-components';
 import breakpoint from 'styled-components-breakpoint';
@@ -129,7 +129,7 @@ const Thing = styled.div`
 
 ```
 
-> Output:
+##### Output:
 ```css
 .cESAFm {
   font-size: 12px;
@@ -160,7 +160,8 @@ Maps an object to CSS where:
 - `fn` - A `function`. The function is called for each breakpoint and is passed the object value.
 - `breakpoints` - An `object`.
 
-> Example:
+##### Example:
+
 ```js
 import styled from 'styled-components';
 import {map} from 'styled-components-breakpoint';
@@ -173,7 +174,8 @@ const Thing = styled.div`
 
 ```
 
-> Output:
+##### Output:
+
 ```css
 .cESAFm {
   width: 100%;
