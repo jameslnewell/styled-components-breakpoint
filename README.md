@@ -33,6 +33,8 @@ const Heading = styled.h1`
   
 `;
 
+export default Heading;
+
 ```
 
 `./index.jsx`
@@ -69,6 +71,8 @@ const Heading = styled.h1`
   `}
   
 `;
+
+export default Heading;
 
 ```
 
