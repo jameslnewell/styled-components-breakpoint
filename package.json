@@ -1,6 +1,6 @@
 {
   "name": "styled-components-breakpoint",
-  "version": "1.0.0-preview.2",
+  "version": "1.0.0-preview.3",
   "description": "Utility function for using breakpoints with `styled-components`.",
   "keywords": [
     "react",
@@ -14,16 +14,21 @@
   ],
   "repository": "jameslnewell/styled-components-breakpoint",
   "main": "dist/index.js",
-  "files": ["dist/index.js"],
+  "files": [
+    "dist"
+  ],
   "peerDependencies": {
-    "styled-components": "^1 || ^2.0.0-1"
+    "styled-components": "^1 || ^2.0.0-3"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
-    "babel-preset-es2015": "^6.22.0"
+    "babel-preset-es2015": "^6.22.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "styled-components": "^2.0.0-3"
   },
   "scripts": {
-    "build": "rm -rf ./dist && mkdir -p ./dist && babel index.js --out-file ./dist/index.js",
+    "build": "rm -rf ./dist && mkdir -p ./dist && babel ./src --out-dir ./dist",
     "prepublish": "npm run build"
   },
   "license": "MIT"

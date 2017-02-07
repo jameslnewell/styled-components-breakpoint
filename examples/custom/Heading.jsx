@@ -6,8 +6,10 @@ const Heading = styled.h1`
   color: #444;
   font-family: sans-serif;
   
+  font-size: 12px;
+  
   ${({theme}) => breakpoint('sm', theme.breakpoints)`
-    font-size: 12px;
+    font-size: 14px;
   `}
   
   ${({theme}) => breakpoint('md', theme.breakpoints)`
