@@ -1,9 +1,10 @@
 import {css} from 'styled-components';
 
 const defaultBreakpoints = {
-  mobile: 0,      //targeting all devices
-  tablet: 737,    //targeting devices that are larger than the iPhone 6 Plus (which is 736px in landscape mode)
-  desktop: 1025   //targeting devices that are larger than the iPad (which is 1024px in landscape mode)
+  xs: 0,
+  sm: 768,
+  md: 1024,
+  lg: 1200
 };
 
 /**
