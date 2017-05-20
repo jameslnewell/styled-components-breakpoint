@@ -1,6 +1,6 @@
 {
   "name": "styled-components-breakpoint",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utility functions for creating breakpoints in `styled-components` 💅.",
   "keywords": [
     "react",

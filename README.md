@@ -212,6 +212,10 @@ These are the default breakpoints provided:
 
 ## Change log
 
+### 1.0.1
+
+Updated the docs.
+
 ### 1.0.0
 
 New features:
@@ -253,7 +257,7 @@ Breaking changes:
   
   ```js
   const Grid = styled.div`
-    ${({wrap}) => map(wrap, value => `flex-wrap: ${(typeof value === 'undefined' || value === true) && 'wrap' || 'nowrap'};`)}
+    ${({wrap}) => map(wrap, (value = true) => `flex-wrap: ${value && 'wrap' || 'nowrap'};`)}
   `;
 
   <Grid/> //works
@@ -261,9 +265,6 @@ Breaking changes:
   <Grid wrap={false}/> //works
   <Grid wrap={{mobile: true, tablet: false}}/> //works
 
-  /*
-    This works now and the strict check for `undefined` is only necessary for `boolean` values.
-   */
-  <Grid wrap={{tablet: false}}/>
+  <Grid wrap={{tablet: false}}/> //works
 
   ```
