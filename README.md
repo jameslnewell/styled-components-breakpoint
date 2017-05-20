@@ -1,6 +1,6 @@
 # styled-components-breakpoint
 
-Utility function for using breakpoints with `styled-components`.
+Utility functions for creating breakpoints in `styled-components` 💅.
 
 ## Installation
 
@@ -48,6 +48,8 @@ import React from 'react';
 
 ### Using custom breakpoints
 
+You can customise the provided breakpoint names and values. If you would like to use the same breakpoints as [Bootstrap](https://v4-alpha.getbootstrap.com/layout/overview/#responsive-breakpoints), you can do so like this:
+
 `./Heading.jsx`
 ```js
 import styled from 'styled-components';
@@ -83,10 +85,12 @@ import React from 'react';
 import {ThemeProvider} from 'styled-components';
 
 const theme = {
-  breakpoints: {
-    sm: 600,
-    md: 900,
-    lg: 1200
+  breakpoints: { 
+    xs: 0,
+    sm: 576,
+    md: 768,
+    lg: 992,
+    xl: 1200
   }
 };
 
@@ -100,10 +104,10 @@ const theme = {
 
 ### `breakpoint(name, [breakpoints])`
 
-Wraps rules in a breakpoint.
+Wraps rules in a `@media` block.
 
 **Properties:**
-- `name` - A `string`. Must be the name of a configured breakpoint.
+- `name` - A `string`. The name of a configured breakpoint.
 - `breakpoints` - An `object`.
 
 ##### Example:
@@ -149,16 +153,16 @@ const Thing = styled.div`
 ```
 
 
-### `map(val, fn, [breakpoints])`
+### `map(value, mapValueToCSS, [breakpoints])`
 
-Maps an object to CSS where:
-  - the object keys map to breakpoint names 
-  - the object values map to a value at the named breakpoint
+Maps rules at multiple breakpoints to `@media` blocks.
 
 **Properties:**
-- `val` - An `object` or `*`. Object keys must be the names of configured breakpoints.
-- `fn` - A `function`. The function is called for each breakpoint and is passed the object value.
+- `value` - An `object` or `*`. A map of values to names of configured breakpoints.
+- `mapValueToCSS` - A `function`. The function is called for each breakpoint and is passed the value for the specific breakpoint.
 - `breakpoints` - An `object`.
+
+**Returns:**
 
 ##### Example:
 
@@ -167,7 +171,7 @@ import styled from 'styled-components';
 import {map} from 'styled-components-breakpoint';
 
 const Thing = styled.div`
-  ${({width, theme}) => map(width, w => `width: ${Math.round(w * 100)}%;`)}
+  ${({width}) => map(width, w => `width: ${Math.round(w * 100)}%;`)}
 `;
 
 <Thing width={{mobile: 1, tablet: 1/2, desktop: 1/4}}/>
@@ -186,6 +190,7 @@ const Thing = styled.div`
     width: 50%;
   }
 }
+
 @media (min-width: 64.0625em) {
   .cESAFm {
     width: 25%;
@@ -193,7 +198,9 @@ const Thing = styled.div`
 }
 ```
 
-## Defaults
+## Default breakpoints
+
+These are the default breakpoints provided:
 
 ```js
 {
@@ -202,3 +209,61 @@ const Thing = styled.div`
     desktop: 1025   //targeting devices that are larger than the iPad (which is 1024px in landscape mode)
 }
 ```
+
+## Change log
+
+### 1.0.0
+
+New features:
+
+- You're now able to specify breakpoints in any type of units if you use a string. Breakpoints that are numbers will still be considered to be `px` and will be converted to `ems`.
+
+Breaking changes:
+
+- `map(value, mapValueToCSS, [breakpoints])` will now call `mapValueToCSS` with `undefined` so you can set any necessary styles for all breakpoints when:
+  - `value` is `undefined`
+  - `value` is an `object`
+
+  before:
+  
+  ```js
+  const Grid = styled.div`
+    ${({wrap}) => map(wrap, value => `flex-wrap: ${value && 'wrap' || 'nowrap'};`)}
+  `;
+
+  Grid.defaultProps = {
+    wrap: true
+  };
+
+  <Grid/> //works
+  <Grid wrap={true}/> //works
+  <Grid wrap={false}/> //works
+  <Grid wrap={{mobile: true, tablet: false}}/> //works
+  
+  /*
+    This breaks because no value is set for the `mobile` breakpoint and CSS defaults to `nowrap`. This is easily fixed
+    by manually setting `flex-wrap: wrap;` outside of the `map()` for all breakpoints... but for complex fns this may require
+    additional interpolation.
+   */
+  <Grid wrap={{tablet: false}}/>
+
+  ```
+
+  after:
+  
+  ```js
+  const Grid = styled.div`
+    ${({wrap}) => map(wrap, value => `flex-wrap: ${(typeof value === 'undefined' || value === true) && 'wrap' || 'nowrap'};`)}
+  `;
+
+  <Grid/> //works
+  <Grid wrap={true}/> //works
+  <Grid wrap={false}/> //works
+  <Grid wrap={{mobile: true, tablet: false}}/> //works
+
+  /*
+    This works now and the strict check for `undefined` is only necessary for `boolean` values.
+   */
+  <Grid wrap={{tablet: false}}/>
+
+  ```

@@ -2,51 +2,51 @@ import {css} from 'styled-components';
 
 const defaultBreakpoints = {
   mobile: 0,      //targeting all devices
-  tablet: 737,    //targeting devices that are larger than the iPhone 6 Plus (which is 736px in landscape mode)
-  desktop: 1025   //targeting devices that are larger than the iPad (which is 1024px in landscape mode)
+  tablet: 737,    //targeting devices that are LARGER than the iPhone 6 Plus (which is 736px in landscape mode)
+  desktop: 1025   //targeting devices that are LARGER than the iPad (which is 1024px in landscape mode)
 };
 
 /**
  * @param   {string}    name
- * @param   {object}    breakpoints
+ * @param   {object}    [breakpoints]
  * @returns {*}
  */
 const breakpoint = (name, breakpoints = defaultBreakpoints) => {
-  const px = breakpoints[name];
-  const ems = px / 16;
+  let breakpoint = breakpoints[name];
+
+  if (typeof breakpoint === 'number') {
+    breakpoint = `${breakpoint / 16}em`; //assume number is px and convert to 'em's
+  }
 
   //special case for 0 to avoid wrapping in an unnecessary @media
-  if (px === 0) {
+  if (parseInt(breakpoint, 10) === 0) {
     return (...args) => css(...args);
   }
 
-  return (...args) => css`@media (min-width: ${ems}em) {
+  return (...args) => css`@media (min-width: ${breakpoint}) {
     ${css(...args)}
   }`;
 
 };
 
 /**
- * @param   {*|object}  val
- * @param   {function}  fn
- * @param   {object}    breakpoints
+ * @param   {*|object}  value
+ * @param   {function}  mapValueToCSS
+ * @param   {object}    [breakpoints]
  * @returns {*}
  */
-const map = (val, fn, breakpoints) => {
-  const type = typeof val;
-
-  if (type === 'undefined') {
-    return null;
-  }
+export const map = (value, mapValueToCSS, breakpoints) => {
+  const type = typeof value;
 
   if (type === 'object') {
-    return Object.keys(val).map(key => breakpoint(key, breakpoints)(...fn(val[key])));
+    return [
+      mapValueToCSS(undefined), //set the default value
+      ...Object.keys(value).map(key => breakpoint(key, breakpoints)(...mapValueToCSS(value[key])))
+    ];
   } else {
-    return fn(val);
+    return mapValueToCSS(value);
   }
 
 };
 
 export default breakpoint;
-export {map};
-

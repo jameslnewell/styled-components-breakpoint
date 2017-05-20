@@ -1,11 +1,13 @@
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
-import {styleSheet} from 'styled-components';
+import {ServerStyleSheet} from 'styled-components';
 import Heading from './Heading';
 
-// styleSheet.reset();
-const html = renderToStaticMarkup(<Heading>Hello World!</Heading>);
-const css = styleSheet.getCSS();
+const sheet = new ServerStyleSheet();
+const html = renderToStaticMarkup(sheet.collectStyles(
+  <Heading>Hello World!</Heading>
+));
+const css = sheet.getStyleTags();
 
 console.log(`HTML\n----------------------------------------------\n${html}\n`);
 console.log(`CSS \n----------------------------------------------\n${css}\n`);
