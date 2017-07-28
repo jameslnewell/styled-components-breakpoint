@@ -5,7 +5,7 @@ Utility functions for creating breakpoints in `styled-components` 💅.
 ## Installation
 
     npm install --save styled-components styled-components-breakpoint
-    
+
 ## Usage
 
 ### Using the default breakpoints
@@ -20,17 +20,17 @@ const Heading = styled.h1`
 
   color: #444;
   font-family: sans-serif;
-  
+
   font-size: 12px;
-  
+
   ${breakpoint('tablet')`
     font-size: 16px;
   `}
-  
+
   ${breakpoint('desktop')`
     font-size: 24px;
   `}
-  
+
 `;
 
 export default Heading;
@@ -59,19 +59,19 @@ const Heading = styled.h1`
 
   color: #444;
   font-family: sans-serif;
-  
+
   ${({theme}) => breakpoint('sm', theme.breakpoints)`
     font-size: 12px;
   `}
-  
+
   ${({theme}) => breakpoint('md', theme.breakpoints)`
     font-size: 16px;
   `}
-  
+
   ${({theme}) => breakpoint('lg', theme.breakpoints)`
     font-size: 24px;
   `}
-  
+
 `;
 
 export default Heading;
@@ -85,7 +85,7 @@ import React from 'react';
 import {ThemeProvider} from 'styled-components';
 
 const theme = {
-  breakpoints: { 
+  breakpoints: {
     xs: 0,
     sm: 576,
     md: 768,
@@ -108,7 +108,8 @@ Wraps rules in a `@media` block.
 
 **Properties:**
 - `name` - A `string`. The name of a configured breakpoint.
-- `breakpoints` - An `object`.
+- `breakpoints` - [Optional] An `object`.
+- `em` - [Optional] A `number`. Font-size in pixels of one em.
 
 ##### Example:
 ```js
@@ -126,7 +127,7 @@ const Thing = styled.div`
   ${breakpoint('desktop')`
     font-size: 24px;
   `};
-  
+
 `;
 
 <Thing/>
@@ -161,6 +162,7 @@ Maps rules at multiple breakpoints to `@media` blocks.
 - `value` - An `object` or `*`. A map of values to names of configured breakpoints.
 - `mapValueToCSS` - A `function`. The function is called for each breakpoint and is passed the value for the specific breakpoint.
 - `breakpoints` - An `object`.
+- `em` - [Optional] A `number`. Font-size in pixels of one em.
 
 **Returns:**
 
@@ -198,16 +200,19 @@ const Thing = styled.div`
 }
 ```
 
-## Default breakpoints
+## Default Values
 
-These are the default breakpoints provided:
+These are the default values provided:
 
 ```js
+// Breakpoints
 {
-    mobile: 0,      //targeting all devices
-    tablet: 737,    //targeting devices that are larger than the iPhone 6 Plus (which is 736px in landscape mode)
-    desktop: 1025   //targeting devices that are larger than the iPad (which is 1024px in landscape mode)
+    mobile: 0,      // Targeting all devices.
+    tablet: 737,    // Targeting devices that are larger than the iPhone 6 Plus (which is 736px in landscape mode).
+    desktop: 1025   // Targeting devices that are larger than the iPad (which is 1024px in landscape mode).
 }
+// Em Value
+const em = 16 // Typical base value for font-size in pixels.
 ```
 
 ## Change log
@@ -229,7 +234,7 @@ Breaking changes:
   - `value` is an `object`
 
   before:
-  
+
   ```js
   const Grid = styled.div`
     ${({wrap}) => map(wrap, value => `flex-wrap: ${value && 'wrap' || 'nowrap'};`)}
@@ -243,7 +248,7 @@ Breaking changes:
   <Grid wrap={true}/> //works
   <Grid wrap={false}/> //works
   <Grid wrap={{mobile: true, tablet: false}}/> //works
-  
+
   /*
     This breaks because no value is set for the `mobile` breakpoint and CSS defaults to `nowrap`. This is easily fixed
     by manually setting `flex-wrap: wrap;` outside of the `map()` for all breakpoints... but for complex fns this may require
@@ -254,7 +259,7 @@ Breaking changes:
   ```
 
   after:
-  
+
   ```js
   const Grid = styled.div`
     ${({wrap}) => map(wrap, (value = true) => `flex-wrap: ${value && 'wrap' || 'nowrap'};`)}
