@@ -1,6 +1,6 @@
 {
   "name": "styled-components-breakpoint",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Utility functions for creating breakpoints in `styled-components` 💅.",
   "keywords": [
     "react",
@@ -13,7 +13,8 @@
     "desktop"
   ],
   "repository": "jameslnewell/styled-components-breakpoint",
-  "main": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "jsnext:main": "dist/esm/index.js",
   "files": [
     "dist"
   ],
@@ -21,15 +22,20 @@
     "styled-components": ">= 1 < 4"
   },
   "devDependencies": {
-    "babel-cli": "^6.22.2",
-    "babel-preset-env": "^1.6.1",
+    "@tradie/react-component-scripts": "^1.0.0-alpha.a573b72a",
+    "gh-pages": "^1.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "styled-components": "^3.1.5"
   },
   "scripts": {
-    "build": "rm -rf ./dist && mkdir -p ./dist && babel ./src --out-dir ./dist",
-    "prepublish": "npm run build"
+    "clean": "tradie clean",
+    "build": "tradie build",
+    "dev": "tradie dev",
+    "test": "tradie test",
+    "deploy": "gh-pages -d \"./dist/example\"",
+    "prepublishOnly": "yarn run clean && yarn run build && yarn run test",
+    "postpublish": "yarn run deploy"
   },
   "license": "MIT"
 }

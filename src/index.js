@@ -1,9 +1,9 @@
 import { css } from 'styled-components';
 
 const defaultBreakpoints = {
-  mobile: 0,      //targeting all devices
-  tablet: 737,    //targeting devices that are LARGER than the iPhone 6 Plus (which is 736px in landscape mode)
-  desktop: 1025   //targeting devices that are LARGER than the iPad (which is 1024px in landscape mode)
+  mobile: 0,      // targeting all devices
+  tablet: 737,    // targeting devices that are LARGER than the iPhone 6 Plus (which is 736px in landscape mode)
+  desktop: 1025   // targeting devices that are LARGER than the iPad (which is 1024px in landscape mode)
 };
 
 /**
@@ -11,15 +11,15 @@ const defaultBreakpoints = {
  * @param   {object}    [breakpoints]
  * @returns {*}
  */
-const breakpoint = (name, breakpoints = defaultBreakpoints) => {
-  let breakpoint = breakpoints[name];
+function breakpoint(name, breakpoints = defaultBreakpoints) {
+  let breakpointValue = breakpoints[name];
 
-  if (typeof breakpoint === 'number') {
-    breakpoint = `${breakpoint / 16}em`; //assume number is px and convert to 'em's
+  if (typeof breakpointValue === 'number') {
+    breakpointValue = `${breakpointValue / 16}em`; // assume number is px and convert to 'em's
   }
 
-  //special case for 0 to avoid wrapping in an unnecessary @media
-  if (parseInt(breakpoint, 10) === 0) {
+  // special case for 0 to avoid wrapping in an unnecessary @media
+  if (parseInt(breakpointValue, 10) === 0) {
     return (...args) => {
       if (!args.length) {
         return '';
@@ -32,7 +32,7 @@ const breakpoint = (name, breakpoints = defaultBreakpoints) => {
     if (!args.length) {
       return '';
     }
-    return css`@media (min-width: ${breakpoint}) {
+    return css`@media (min-width: ${breakpointValue}) {
       ${css(...args)}
     }`;
   };
@@ -50,9 +50,9 @@ export const map = (value, mapValueToCSS, breakpoints) => {
 
   if (type === 'object') {
     return [
-      mapValueToCSS(undefined), //set the default value
+      // eslint-disable-next-line no-undefined
+      mapValueToCSS(undefined), // set the default value
       ...Object.keys(value).map(key => {
-
         return breakpoint(key, breakpoints)([].concat(mapValueToCSS(value[key])))
       })
     ];

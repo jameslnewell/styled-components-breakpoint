@@ -4,11 +4,15 @@ Utility functions for creating breakpoints in `styled-components` 💅.
 
 ## Installation
 
-    npm install --save styled-components styled-components-breakpoint
+```bash
+yarn add styled-components styled-components-breakpoint
+```
     
 ## Usage
 
 ### Using the default breakpoints
+
+[demo](https://jameslnewell.github.io/styled-components-breakpoint/#default-breakpoints)
 
 `./Heading.jsx`
 
@@ -48,6 +52,8 @@ import Heading from './Heading';
 ```
 
 ### Using custom breakpoints
+
+[demo](https://jameslnewell.github.io/styled-components-breakpoint/#custom-breakpoints)
 
 You can customise the provided breakpoint names and values. If you would like to use the same breakpoints as [Bootstrap](https://v4-alpha.getbootstrap.com/layout/overview/#responsive-breakpoints), you can do so like this:
 
@@ -213,9 +219,14 @@ These are the default breakpoints provided:
 
 ## Change log
 
-### 1.0.2
+### 1.0.3
 
-- updated `peerDependency` on `styled-components` to support v3 - 👏 Thanks [@ApacheEx](https://github.com/ApacheEx) ([#10](https://github.com/jameslnewell/styled-components-breakpoint/pull/10))
+- changed how the package is built
+- added a demo page
+
+### 1.0.
+
+- updated `peerDependency` for `styled-components` to support v3 - 👏 Thanks [@ApacheEx](https://github.com/ApacheEx) ([#10](https://github.com/jameslnewell/styled-components-breakpoint/pull/10))
 - fixed a bug in the `map()` fn
 
 ### 1.0.1
