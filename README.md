@@ -213,6 +213,11 @@ These are the default breakpoints provided:
 
 ## Change log
 
+### 1.0.2
+
+- updated `peerDependency` on `styled-components` to support v3 - 👏 Thanks [@ApacheEx](https://github.com/ApacheEx) ([#10](https://github.com/jameslnewell/styled-components-breakpoint/pull/10))
+- fixed a bug in the `map()` fn
+
 ### 1.0.1
 
 Updated the docs.

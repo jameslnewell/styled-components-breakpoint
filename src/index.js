@@ -1,4 +1,4 @@
-import {css} from 'styled-components';
+import { css } from 'styled-components';
 
 const defaultBreakpoints = {
   mobile: 0,      //targeting all devices
@@ -53,7 +53,7 @@ export const map = (value, mapValueToCSS, breakpoints) => {
       mapValueToCSS(undefined), //set the default value
       ...Object.keys(value).map(key => {
 
-        breakpoint(key, breakpoints)(...mapValueToCSS(value[key]))
+        return breakpoint(key, breakpoints)([].concat(mapValueToCSS(value[key])))
       })
     ];
   } else {
