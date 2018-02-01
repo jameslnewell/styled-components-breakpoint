@@ -18,14 +18,14 @@
     "dist"
   ],
   "peerDependencies": {
-    "styled-components": "^1 || ^2.0.0-3"
+    "styled-components": ">= 1 < 4"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-preset-es2015": "^6.22.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "styled-components": "^2.0.0-3"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "styled-components": "^3.1.5"
   },
   "scripts": {
     "build": "rm -rf ./dist && mkdir -p ./dist && babel ./src --out-dir ./dist",
