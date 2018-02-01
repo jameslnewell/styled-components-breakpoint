@@ -20,12 +20,22 @@ const breakpoint = (name, breakpoints = defaultBreakpoints) => {
 
   //special case for 0 to avoid wrapping in an unnecessary @media
   if (parseInt(breakpoint, 10) === 0) {
-    return (...args) => css(...args);
+    return (...args) => {
+      if (!args.length) {
+        return '';
+      }
+      return css(...args);
+    }
   }
 
-  return (...args) => css`@media (min-width: ${breakpoint}) {
-    ${css(...args)}
-  }`;
+  return (...args) => {
+    if (!args.length) {
+      return '';
+    }
+    return css`@media (min-width: ${breakpoint}) {
+      ${css(...args)}
+    }`;
+  };
 
 };
 
@@ -41,7 +51,10 @@ export const map = (value, mapValueToCSS, breakpoints) => {
   if (type === 'object') {
     return [
       mapValueToCSS(undefined), //set the default value
-      ...Object.keys(value).map(key => breakpoint(key, breakpoints)(...mapValueToCSS(value[key])))
+      ...Object.keys(value).map(key => {
+
+        breakpoint(key, breakpoints)(...mapValueToCSS(value[key]))
+      })
     ];
   } else {
     return mapValueToCSS(value);
