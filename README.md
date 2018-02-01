@@ -41,6 +41,7 @@ export default Heading;
 
 ```js
 import React from 'react';
+import Heading from './Heading';
 
 <Heading>Hello World!</Heading>
 
