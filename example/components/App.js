@@ -2,14 +2,44 @@ import React from 'react';
 import createComponentFromTagProp from 'react-create-component-from-tag-prop';
 import styled, { injectGlobal, ThemeProvider } from 'styled-components';
 // eslint-disable-next-line import/no-extraneous-dependencies, import/no-unresolved
-import breakpoint, { map } from 'styled-components-breakpoint';
+import breakpoint, { map, createStatic } from 'styled-components-breakpoint';
 
-const BOOTSTRAP_BREAKPOINTS = {
+const STATIC_BREAKPOINTS = createStatic();
+
+const DEFAULT_BREAKPOINTS = {
+  mobile: 0,
+  tablet: 737,
+  desktop: 1025
+};
+
+const CUSTOM_BREAKPOINTS = {
   xs: 0,
   sm: 576,
   md: 768,
   lg: 992,
   xl: 1200
+};
+
+const BREAKPOINT_TITLES = {
+  mobile: 'Mobile',
+  tablet: 'Tablet',
+  desktop: 'Desktop',
+  xs: 'XS',
+  sm: 'SM',
+  md: 'MD',
+  lg: 'LG',
+  xl: 'XL'
+};
+
+const BREAKPOINT_COLORS = {
+  mobile: '#D7F2BA',
+  tablet: '#BDE4A8',
+  desktop: '#9CC69B',
+  xs: '#D7F2BA',
+  sm: '#BDE4A8',
+  md: '#9CC69B',
+  lg: '#79B4A9',
+  xl: '#556C70'
 };
 
 /* eslint-disable no-unused-expressions */
@@ -26,13 +56,13 @@ injectGlobal`
     font-size: 0.9em;
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 
-    ${breakpoint('tablet') `
+    ${STATIC_BREAKPOINTS.tablet`
       font-size: 1em;
-    `({})}
+    `}
     
-    ${breakpoint('desktop') `
+    ${STATIC_BREAKPOINTS.desktop`
       font-size: 1.1em;
-    `({})}
+    `}
     
   }
 
@@ -57,6 +87,12 @@ const H2 = styled.h2`
 
 const P = styled.p`
   margin: 1em 0;
+`;
+
+const Button = styled.button`
+  padding: 0.5em;
+  font-size: 1em;
+  border-radius: 3px;
 `;
 
 const Instruction = styled.blockquote`
@@ -115,89 +151,70 @@ const BreakpointCode = styled.pre`
   overflow: hidden;
 `;
 
-export default function App() {
-  return (
-    <Main>
-      <H1>styled-components-breakpoint</H1>
+export default class App extends React.Component<{}, {}> {
 
-      <H2 id="default-breakpoints">Default Breakpoints</H2>
-      <Breakpoint gte="mobile" color="#FFE7AC">
-        <BreakpointTitle>Mobile</BreakpointTitle>
-        <BreakpointCode>{"${breakpoint('mobile') `/* styles go here */`}"}</BreakpointCode>
-      </Breakpoint>
-      <Breakpoint gte="tablet" color="#EAFFAC">
-        <BreakpointTitle>Tablet</BreakpointTitle>
-        <BreakpointCode>{"${breakpoint('tablet') `/* styles go here */`}"}</BreakpointCode>
-      </Breakpoint>
-      <Breakpoint gte="desktop" color="#AFEBFF">
-        <BreakpointTitle>Desktop</BreakpointTitle>
-        <BreakpointCode>{"${breakpoint('desktop') `/* styles go here */`}"}</BreakpointCode>
-      </Breakpoint>
-      <Instruction>Try resizing the page. 👉</Instruction>
+  state = {
+    breakpoints: DEFAULT_BREAKPOINTS
+  };
 
-      <H2 id="custom-breakpoints">Custom Breakpoints</H2>
-      <ThemeProvider theme={{ breakpoints: BOOTSTRAP_BREAKPOINTS }}>
-        <div>
-          <Breakpoint gte="xs" color="FFE7AC">
-            <BreakpointTitle>XS</BreakpointTitle>
-            <BreakpointCode>{"${breakpoint('xs') `/* styles go here */`}"}</BreakpointCode>
-          </Breakpoint>
-          <Breakpoint gte="sm" color="#EAFFAC">
-            <BreakpointTitle>SM</BreakpointTitle>
-            <BreakpointCode>{"${breakpoint('sm') `/* styles go here */`}"}</BreakpointCode>
-          </Breakpoint>
-          <Breakpoint gte="lg" color="#AFEBFF">
-            <BreakpointTitle>LG</BreakpointTitle>
-            <BreakpointCode>{"${breakpoint('lg') `/* styles go here */`}"}</BreakpointCode>
-          </Breakpoint>
-          <Breakpoint gte="xl" color="#FFACE8">
-            <BreakpointTitle>XL</BreakpointTitle>
-            <BreakpointCode>{"${breakpoint('xl') `/* styles go here */`}"}</BreakpointCode>
-          </Breakpoint>
+  handleToggleBreakpoints = () => {
+    this.setState(state => ({
+      breakpoints: state.breakpoints !== DEFAULT_BREAKPOINTS ? DEFAULT_BREAKPOINTS : CUSTOM_BREAKPOINTS
+    }));
+  }
+
+  render() {
+    const { breakpoints } = this.state;
+    const colors = Object.keys(breakpoints).reduce((accum, name) => {
+      accum[name] = BREAKPOINT_COLORS[name];
+      return accum;
+    }, {});
+    const titles = Object.keys(breakpoints).reduce((accum, name) => {
+      accum[name] = BREAKPOINT_TITLES[name];
+      return accum;
+    }, {});
+    return (
+      <ThemeProvider theme={{ breakpoints }}>
+        <Main>
+          <H1>styled-components-breakpoint</H1>
+
+          <Button onClick={this.handleToggleBreakpoints}>
+            {breakpoints === DEFAULT_BREAKPOINTS ? 'Use default breakpoints' : 'Use custom breakpoints'}
+          </Button>
+
+          <H2 id="gte">gte</H2>
+          <P>Greater than or equal to.</P>
+          {Object.keys(breakpoints).map(name => (
+            <Breakpoint key={name} gte={name} color={BREAKPOINT_COLORS[name]}>
+              <BreakpointTitle>{BREAKPOINT_TITLES[name]}</BreakpointTitle>
+              <BreakpointCode>{`\$\{breakpoint('${name}') \`/* styles go here */\`\}`}</BreakpointCode>
+            </Breakpoint>
+          ))}
           <Instruction>Try resizing the page. 👉</Instruction>
-        </div>
+
+          <H2 id="gte-and-lt">gte and lt</H2>
+          <P>Greater than or equal to X but less than Y.</P>
+          {Object.keys(breakpoints).map((name, index) => {
+            const nextName = Object.keys(breakpoints)[index + 1];
+            return (
+              <Breakpoint key={name} gte={name} lt={nextName} color={BREAKPOINT_COLORS[name]}>
+                <BreakpointTitle>{BREAKPOINT_TITLES[name]}</BreakpointTitle>
+                <BreakpointCode>{`\$\{breakpoint('${name}'${nextName ? `, '${nextName}'` : ''}) \`/* styles go here */\`\}`}</BreakpointCode>
+              </Breakpoint>
+            );
+          })}
+          <Instruction>Try resizing the page. 👉</Instruction>
+
+          <H2 id="map">map</H2>
+          <P>Map a value to styles for each breakpoint where a value is specified.</P>
+          <BreakpointMap color={colors}>
+            <BreakpointTitle text={titles} />
+            <BreakpointCode>{`\$\{map(${JSON.stringify(colors, null, 2)}, (color) => \`/* styles go here */\`\}`}</BreakpointCode>
+          </BreakpointMap>
+          <Instruction>Try resizing the page. 👉</Instruction>
+
+        </Main>
       </ThemeProvider>
-
-      <H2 id="gte">gte</H2>
-      <P>Greater than or equal to.</P>
-      <Breakpoint gte="mobile" color="FFE7AC">
-        <BreakpointTitle>Mobile</BreakpointTitle>
-        <BreakpointCode>{"${breakpoint('mobile') `/* styles go here */`}"}</BreakpointCode>
-      </Breakpoint>
-      <Breakpoint gte="tablet" color="EAFFAC">
-        <BreakpointTitle>Tablet</BreakpointTitle>
-        <BreakpointCode>{"${breakpoint('tablet') `/* styles go here */`}"}</BreakpointCode>
-      </Breakpoint>
-      <Breakpoint gte="desktop" color="AFEBFF">
-        <BreakpointTitle>Desktop</BreakpointTitle>
-        <BreakpointCode>{"${breakpoint('desktop') `/* styles go here */`}"}</BreakpointCode>
-      </Breakpoint>
-      <Instruction>Try resizing the page. 👉</Instruction>
-
-      <H2 id="gte-and-lt">gte and lt</H2>
-      <P>Greater than or equal to X but less than Y.</P>
-      <Breakpoint gte="mobile" lt="tablet" color="FFE7AC">
-        <BreakpointTitle>Mobile</BreakpointTitle>
-        <BreakpointCode>{"${breakpoint('mobile', 'tablet') `/* styles go here */`}"}</BreakpointCode>
-      </Breakpoint>
-      <Breakpoint gte="tablet" lt="desktop" color="EAFFAC">
-        <BreakpointTitle>Tablet</BreakpointTitle>
-        <BreakpointCode>{"${breakpoint('tablet', 'desktop') `/* styles go here */`}"}</BreakpointCode>
-      </Breakpoint>
-      <Breakpoint gte="desktop" color="AFEBFF">
-        <BreakpointTitle>Desktop</BreakpointTitle>
-        <BreakpointCode>{"${breakpoint('desktop') `/* styles go here */`}"}</BreakpointCode>
-      </Breakpoint>
-      <Instruction>Try resizing the page. 👉</Instruction>
-
-      <H2 id="map">map</H2>
-      <P>Map a value to styles for each breakpoint where a value is specified.</P>
-      <BreakpointMap color={{ mobile: '#FFE7AC', tablet: '#EAFFAC', desktop: '#AFEBFF' }}>
-        <BreakpointTitle text={{ mobile: 'Mobile', tablet: 'Tablet', desktop: 'Desktop' }} />
-        <BreakpointCode>{"${map({ mobile: '#FFE7AC', tablet: '#EAFFAC', desktop: '#AFEBFF' }, val => `/* styles go here */`)}"}</BreakpointCode>
-      </BreakpointMap>
-      <Instruction>Try resizing the page. 👉</Instruction>
-
-    </Main>
-  );
+    );
+  };
 }

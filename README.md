@@ -10,9 +10,9 @@ yarn add styled-components styled-components-breakpoint
     
 ## Usage
 
-### Using the default breakpoints
+[Examples](https://jameslnewell.github.io/styled-components-breakpoint/)
 
-[demo](https://jameslnewell.github.io/styled-components-breakpoint/#default-breakpoints)
+### Using the default breakpoints
 
 `./Heading.jsx`
 
@@ -53,8 +53,6 @@ import Heading from './Heading';
 
 ### Using custom breakpoints
 
-[demo](https://jameslnewell.github.io/styled-components-breakpoint/#custom-breakpoints)
-
 You can customise the provided breakpoint names and values. If you would like to use the same breakpoints as [Bootstrap](https://v4-alpha.getbootstrap.com/layout/overview/#responsive-breakpoints), you can do so like this:
 
 `./Heading.jsx`
@@ -67,15 +65,15 @@ const Heading = styled.h1`
   color: #444;
   font-family: sans-serif;
   
-  ${({theme}) => breakpoint('sm', theme.breakpoints)`
+  ${breakpoint('sm')`
     font-size: 12px;
   `}
   
-  ${({theme}) => breakpoint('md', theme.breakpoints)`
+  ${breakpoint('md')`
     font-size: 16px;
   `}
   
-  ${({theme}) => breakpoint('lg', theme.breakpoints)`
+  ${breakpoint('lg')`
     font-size: 24px;
   `}
   
@@ -109,13 +107,14 @@ const theme = {
 
 ## API
 
-### `breakpoint(name, [breakpoints])`
+### `breakpoint(gte)`
+### `breakpoint(gte, lt)`
 
 Wraps rules in a `@media` block.
 
 **Properties:**
-- `name` - A `string`. The name of a configured breakpoint.
-- `breakpoints` - An `object`.
+- `gte` - A `string`. The name of a configured breakpoint.
+- `lt` - A `string`. The name of a configured breakpoint.
 
 ##### Example:
 ```js
@@ -160,14 +159,13 @@ const Thing = styled.div`
 ```
 
 
-### `map(value, mapValueToCSS, [breakpoints])`
+### `map(value, mapValueToCSS)`
 
 Maps rules at multiple breakpoints to `@media` blocks.
 
 **Properties:**
 - `value` - An `object` or `*`. A map of values to names of configured breakpoints.
 - `mapValueToCSS` - A `function`. The function is called for each breakpoint and is passed the value for the specific breakpoint.
-- `breakpoints` - An `object`.
 
 **Returns:**
 
@@ -178,7 +176,7 @@ import styled from 'styled-components';
 import {map} from 'styled-components-breakpoint';
 
 const Thing = styled.div`
-  ${({width}) => map(width, w => `width: ${Math.round(w * 100)}%;`)}
+  ${({width}) => map(width, val => `width: ${Math.round(val * 100)}%;`)}
 `;
 
 <Thing width={{mobile: 1, tablet: 1/2, desktop: 1/4}}/>
@@ -205,6 +203,63 @@ const Thing = styled.div`
 }
 ```
 
+### `createStatic(breakpoints)`
+
+Creates a static set of breakpoints which aren't themable.
+
+**Properties:**
+- `breakpoints` - Optional. A map of breakpoint names and sizes.
+
+**Returns:**
+
+- an `object` containing the breakpoints and the `breakpoint` and `map` functions
+
+##### Example:
+
+```js
+import styled from 'styled-components';
+import {createStatic} from 'styled-components-breakpoint';
+
+const breakpoints = createStatic();
+
+const Thing = styled.div`
+
+  font-size: 12px;
+
+  ${breakpoints.tablet`
+    font-size: 16px;
+  `};
+
+  ${breakpoints.desktop`
+    font-size: 24px;
+  `};
+  
+`;
+
+<Thing/>
+
+```
+
+##### Output:
+
+```css
+.cESAFm {
+  font-size: 12px;
+}
+
+@media (min-width: 46.0625em) {
+  .cESAFm {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 64.0625em) {
+  .cESAFm {
+    font-size: 24px;
+  }
+}
+```
+
 ## Default breakpoints
 
 These are the default breakpoints provided:
@@ -222,6 +277,10 @@ These are the default breakpoints provided:
 ### 2.0.0
 
 - break: removed support for non-numeric breakpoint values (so we can perform numerical operations on the values)
+- break: simplified usage of breakpoints with a custom theme
+- updated `breakpoint(name)` to `breakpoint(gte[, lt])`
+- added a demos page
+- added `createStatic()`
 
 ### 1.0.3
 

@@ -48,4 +48,14 @@ export function map(value: BreakpointValueMap, mapValueToCSS: MapBreakpointValue
   return ({ theme = {} }: ComponentProps) => _map(theme.breakpoints || defaultBreakpoints, value, mapValueToCSS);
 }
 
+export function createStatic(breakpoints: BreakpointMap = defaultBreakpoints) {
+  return Object.keys(breakpoints).reduce((accum, name) => {
+    accum[name] = _breakpoint(breakpoints, name);
+    return accum;
+  }, {
+      breakpoint: (gte: string, lt?: string) => _breakpoint(breakpoints, gte, lt),
+      map: (value: BreakpointValueMap, mapValueToCSS: MapBreakpointValueToCSSFunction) => _map(breakpoints, value, mapValueToCSS),
+    });
+}
+
 export default breakpoint;
