@@ -1,4 +1,16 @@
-import { css } from 'styled-components';
+// @flow
+import {
+  type BreakpointMap,
+  type BreakpointValueMap,
+  type MapBreakpointValueToCSSFunction,
+  // _gt,
+  // _gte,
+  // _lt,
+  // _lte,
+  // _between,
+  _breakpoint,
+  _map
+} from './core';
 
 const defaultBreakpoints = {
   mobile: 0,      // targeting all devices
@@ -6,60 +18,34 @@ const defaultBreakpoints = {
   desktop: 1025   // targeting devices that are LARGER than the iPad (which is 1024px in landscape mode)
 };
 
-/**
- * @param   {string}    name
- * @param   {object}    [breakpoints]
- * @returns {*}
- */
-function breakpoint(name, breakpoints = defaultBreakpoints) {
-  let breakpointValue = breakpoints[name];
-
-  if (typeof breakpointValue === 'number') {
-    breakpointValue = `${breakpointValue / 16}em`; // assume number is px and convert to 'em's
+type ComponentProps = {
+  theme: {
+    breakpoints?: BreakpointMap
   }
-
-  // special case for 0 to avoid wrapping in an unnecessary @media
-  if (parseInt(breakpointValue, 10) === 0) {
-    return (...args) => {
-      if (!args.length) {
-        return '';
-      }
-      return css(...args);
-    }
-  }
-
-  return (...args) => {
-    if (!args.length) {
-      return '';
-    }
-    return css`@media (min-width: ${breakpointValue}) {
-      ${css(...args)}
-    }`;
-  };
-
 };
 
-/**
- * @param   {*|object}  value
- * @param   {function}  mapValueToCSS
- * @param   {object}    [breakpoints]
- * @returns {*}
- */
-export const map = (value, mapValueToCSS, breakpoints) => {
-  const type = typeof value;
+// export function gt(name: string) {
+//   return (strings: string[], ...args: any[]) => ({ theme = {} }: ComponentProps) => _gt(theme.breakpoints || defaultBreakpoints, name)(strings, ...args);
+// }
 
-  if (type === 'object') {
-    return [
-      // eslint-disable-next-line no-undefined
-      mapValueToCSS(undefined), // set the default value
-      ...Object.keys(value).map(key => {
-        return breakpoint(key, breakpoints)([].concat(mapValueToCSS(value[key])))
-      })
-    ];
-  } else {
-    return mapValueToCSS(value);
-  }
+// export function gte(name: string) {
+//   return (strings: string[], ...args: any[]) => ({ theme = {} }: ComponentProps) => _gte(theme.breakpoints || defaultBreakpoints, name)(strings, ...args);
+// }
 
-};
+// export function lt(name: string) {
+//   return (strings: string[], ...args: any[]) => ({ theme = {} }: ComponentProps) => _lt(theme.breakpoints || defaultBreakpoints, name)(strings, ...args);
+// }
+
+// export function lte(name: string) {
+//   return (strings: string[], ...args: any[]) => ({ theme = {} }: ComponentProps) => _lte(theme.breakpoints || defaultBreakpoints, name)(strings, ...args);
+// }
+
+function breakpoint(gte: string, lt?: string) {
+  return (strings: string[], ...args: any[]) => ({ theme = {} }: ComponentProps) => _breakpoint(theme.breakpoints || defaultBreakpoints, gte, lt)(strings, ...args);
+}
+
+export function map(value: BreakpointValueMap, mapValueToCSS: MapBreakpointValueToCSSFunction) {
+  return ({ theme = {} }: ComponentProps) => _map(theme.breakpoints || defaultBreakpoints, value, mapValueToCSS);
+}
 
 export default breakpoint;

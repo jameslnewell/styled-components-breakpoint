@@ -219,12 +219,16 @@ These are the default breakpoints provided:
 
 ## Change log
 
+### 2.0.0
+
+- break: removed support for non-numeric breakpoint values (so we can perform numerical operations on the values)
+
 ### 1.0.3
 
 - changed how the package is built
 - added a demo page
 
-### 1.0.
+### 1.0.2
 
 - updated `peerDependency` for `styled-components` to support v3 - 👏 Thanks [@ApacheEx](https://github.com/ApacheEx) ([#10](https://github.com/jameslnewell/styled-components-breakpoint/pull/10))
 - fixed a bug in the `map()` fn
