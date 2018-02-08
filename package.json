@@ -16,14 +16,19 @@
   "main": "dist/cjs/index.js",
   "jsnext:main": "dist/esm/index.js",
   "files": [
-    "dist"
+    "dist/cjs",
+    "dist/esm"
   ],
   "peerDependencies": {
     "styled-components": ">= 1 < 4"
   },
   "devDependencies": {
     "@tradie/react-component-scripts": "^1.0.0-alpha.a573b72a",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.1",
     "gh-pages": "^1.1.0",
+    "jest-styled-components": "^4.11.0-1",
     "react": "^16.2.0",
     "react-create-component-from-tag-prop": "^1.3.1",
     "react-dom": "^16.2.0",
@@ -32,6 +37,7 @@
   "scripts": {
     "clean": "tradie clean",
     "build": "tradie build",
+    "watch": "tradie build --watch",
     "dev": "tradie dev",
     "test": "tradie test",
     "deploy": "gh-pages -d \"./dist/example\"",

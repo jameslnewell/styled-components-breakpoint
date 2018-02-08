@@ -1,10 +1,8 @@
+// @flow
 import React from 'react';
 import createComponentFromTagProp from 'react-create-component-from-tag-prop';
 import styled, { injectGlobal, ThemeProvider } from 'styled-components';
-// eslint-disable-next-line import/no-extraneous-dependencies, import/no-unresolved
-import breakpoint, { map, createStatic } from 'styled-components-breakpoint';
-
-const STATIC_BREAKPOINTS = createStatic();
+import breakpoint, { map, createStatic } from '../../src';
 
 const DEFAULT_BREAKPOINTS = {
   mobile: 0,
@@ -41,6 +39,8 @@ const BREAKPOINT_COLORS = {
   lg: '#79B4A9',
   xl: '#556C70'
 };
+
+const STATIC_BREAKPOINTS = createStatic();
 
 /* eslint-disable no-unused-expressions */
 injectGlobal`
@@ -151,7 +151,15 @@ const BreakpointCode = styled.pre`
   overflow: hidden;
 `;
 
-export default class App extends React.Component<{}, {}> {
+export type AppProps = {
+
+};
+
+export type AppState = {
+  breakpoints: { [name: string]: number };
+};
+
+export default class App extends React.Component<AppProps, AppState> {
 
   state = {
     breakpoints: DEFAULT_BREAKPOINTS
@@ -187,7 +195,7 @@ export default class App extends React.Component<{}, {}> {
           {Object.keys(breakpoints).map(name => (
             <Breakpoint key={name} gte={name} color={BREAKPOINT_COLORS[name]}>
               <BreakpointTitle>{BREAKPOINT_TITLES[name]}</BreakpointTitle>
-              <BreakpointCode>{`\$\{breakpoint('${name}') \`/* styles go here */\`\}`}</BreakpointCode>
+              <BreakpointCode>{`$\{breakpoint('${name}') \`/* styles go here */\`}`}</BreakpointCode>
             </Breakpoint>
           ))}
           <Instruction>Try resizing the page. 👉</Instruction>
@@ -199,7 +207,7 @@ export default class App extends React.Component<{}, {}> {
             return (
               <Breakpoint key={name} gte={name} lt={nextName} color={BREAKPOINT_COLORS[name]}>
                 <BreakpointTitle>{BREAKPOINT_TITLES[name]}</BreakpointTitle>
-                <BreakpointCode>{`\$\{breakpoint('${name}'${nextName ? `, '${nextName}'` : ''}) \`/* styles go here */\`\}`}</BreakpointCode>
+                <BreakpointCode>{`$\{breakpoint('${name}'${nextName ? `, '${nextName}'` : ''}) \`/* styles go here */\`}`}</BreakpointCode>
               </Breakpoint>
             );
           })}
@@ -209,7 +217,7 @@ export default class App extends React.Component<{}, {}> {
           <P>Map a value to styles for each breakpoint where a value is specified.</P>
           <BreakpointMap color={colors}>
             <BreakpointTitle text={titles} />
-            <BreakpointCode>{`\$\{map(${JSON.stringify(colors, null, 2)}, (color) => \`/* styles go here */\`\}`}</BreakpointCode>
+            <BreakpointCode>{`$\{map(${JSON.stringify(colors, null, 2)}, (color) => \`/* styles go here */\`}`}</BreakpointCode>
           </BreakpointMap>
           <Instruction>Try resizing the page. 👉</Instruction>
 

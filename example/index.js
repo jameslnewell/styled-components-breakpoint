@@ -1,5 +1,9 @@
+// @flow
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const element = document.getElementById('app');
+if (element) {
+  ReactDOM.render(<App />, element);
+}
