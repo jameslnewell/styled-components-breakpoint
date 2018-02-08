@@ -1,5 +1,7 @@
 # styled-components-breakpoint
 
+[![Build Status](https://travis-ci.org/jameslnewell/styled-components-breakpoint.svg?branch=master)](https://travis-ci.org/jameslnewell/styled-components-breakpoint)
+
 Utility functions for creating breakpoints in `styled-components` 💅.
 
 > [Change log](https://github.com/jameslnewell/styled-components-breakpoint/blob/master/CHANGELOG.md)
