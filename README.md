@@ -12,7 +12,7 @@ yarn add styled-components styled-components-breakpoint
     
 ## Usage
 
-[Examples](https://jameslnewell.github.io/styled-components-breakpoint/)
+> [Examples](https://jameslnewell.github.io/styled-components-breakpoint/)
 
 ### Using the default breakpoints
 
