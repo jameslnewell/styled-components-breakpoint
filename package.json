@@ -36,7 +36,8 @@
   },
   "scripts": {
     "clean": "tradie clean",
-    "build": "tradie build",
+    "build": "tradie lint",
+    "lint": "tradie build",
     "watch": "tradie build --watch",
     "dev": "tradie dev",
     "test": "tradie test",
