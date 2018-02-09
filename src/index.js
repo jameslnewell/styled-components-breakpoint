@@ -2,7 +2,7 @@
 import {
   type BreakpointMap,
   type BreakpointValueMap,
-  type MapBreakpointValueToCSSFunction,
+  type BreakpointMapValueToCSSFunction,
   // _gt,
   // _gte,
   // _lt,
@@ -44,17 +44,17 @@ function breakpoint(gte: string, lt?: string) {
   return (strings: string[], ...args: any[]) => ({ theme = {} }: ComponentProps) => _breakpoint(theme.breakpoints || defaultBreakpoints, gte, lt)(strings, ...args);
 }
 
-export function map(value: BreakpointValueMap, mapValueToCSS: MapBreakpointValueToCSSFunction) {
+export function map<T: string | number > (value: BreakpointValueMap < T >, mapValueToCSS: BreakpointMapValueToCSSFunction<T>) {
   return ({ theme = {} }: ComponentProps) => _map(theme.breakpoints || defaultBreakpoints, value, mapValueToCSS);
 }
 
-export function createStatic(breakpoints: BreakpointMap = defaultBreakpoints) {
+export function createStatic(breakpoints: BreakpointMap = defaultBreakpoints): { [name: string]: Function } {
   return Object.keys(breakpoints).reduce((accum, name) => {
     accum[name] = _breakpoint(breakpoints, name);
     return accum;
   }, {
       breakpoint: (gte: string, lt?: string) => _breakpoint(breakpoints, gte, lt),
-      map: (value: BreakpointValueMap, mapValueToCSS: MapBreakpointValueToCSSFunction) => _map(breakpoints, value, mapValueToCSS),
+      map: <T: string | number > (value: BreakpointValueMap<T>, mapValueToCSS: BreakpointMapValueToCSSFunction<T>) => _map(breakpoints, value, mapValueToCSS),
     });
 }
 

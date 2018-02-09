@@ -2,9 +2,16 @@
 /* global process */
 import { css } from 'styled-components';
 
+export type Interpolation =
+  | ((executionContext: Object) => Interpolation)
+  | string
+  | number
+  | Array<Interpolation>
+  ;
+
 export type BreakpointMap = { [name: string]: number };
-export type BreakpointValueMap = string | { [name: string]: any };
-export type MapBreakpointValueToCSSFunction = (value: ?any) => string | (...args: any[]) => string;
+export type BreakpointValueMap<T: string | number> = T | { [name: string]: T };
+export type BreakpointMapValueToCSSFunction<T: string | number> = (value: ?T) => Interpolation; // eslint-disable-line no-undef
 
 function convertPxToEm(pixels: number): number {
   // @media is always calculated off 16px regardless of whether the root font size is the default or not
@@ -78,11 +85,11 @@ export function _breakpoint(breakpoints: BreakpointMap, gte: string, lt?: string
 };
 
 // TODO: allow the operator to be customised
-export function _map(breakpoints: BreakpointMap, value: BreakpointValueMap, mapValueToCSS: MapBreakpointValueToCSSFunction) {
+export function _map<T: string | number > (breakpoints: BreakpointMap, value: BreakpointValueMap < T >, mapValueToCSS: BreakpointMapValueToCSSFunction<T>) {
   const values = value;
 
-  if (typeof values === 'string') {
-    return mapValueToCSS(value);
+  if (typeof values === 'string' || typeof values === 'number') {
+    return mapValueToCSS(values);
   }
 
   return [

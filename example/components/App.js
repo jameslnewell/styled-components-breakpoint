@@ -126,29 +126,29 @@ const BreakpointMap = styled(whitelistedDiv) `
     content: '✅';
     text-align: right;
   }
-  ${({ color }) => map(color, (val = 'transparent') => {
-    return `background-color: ${val};`;
-  })}
+  ${({ color }) => map(color, (val = 'transparent') => `background-color: ${val || ''};`)}
 `;
 
 const BreakpointTitle = styled.div`
-  flex-shrink: 0;
-  width: 5em;
-  font-weight: bold;
-  ${({ text = {} }) => map(text, (val = '') => {
+flex - shrink: 0;
+width: 5em;
+font - weight: bold;
+${
+  ({ text = {} }) => map(text, (val = '') => {
     return `:before {
-      content: '${val}';
-    }`;
-  })}
+      content: '${val || ''}';
+  }`;
+  })
+  }
 `;
 
 const BreakpointCode = styled.pre`
-  margin-right: 1em;
-  flex-grow: 1;
-  color: #666;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+margin - right: 1em;
+flex - grow: 1;
+color: #666;
+text - overflow: ellipsis;
+white - space: nowrap;
+overflow: hidden;
 `;
 
 export type AppProps = {
@@ -195,22 +195,24 @@ export default class App extends React.Component<AppProps, AppState> {
           {Object.keys(breakpoints).map(name => (
             <Breakpoint key={name} gte={name} color={BREAKPOINT_COLORS[name]}>
               <BreakpointTitle>{BREAKPOINT_TITLES[name]}</BreakpointTitle>
-              <BreakpointCode>{`$\{breakpoint('${name}') \`/* styles go here */\`}`}</BreakpointCode>
-            </Breakpoint>
+              <BreakpointCode>{`$\{ breakpoint('${name}') \`/* styles go here */\`}`}</BreakpointCode >
+            </Breakpoint >
           ))}
           <Instruction>Try resizing the page. 👉</Instruction>
 
           <H2 id="gte-and-lt">gte and lt</H2>
           <P>Greater than or equal to X but less than Y.</P>
-          {Object.keys(breakpoints).map((name, index) => {
-            const nextName = Object.keys(breakpoints)[index + 1];
-            return (
-              <Breakpoint key={name} gte={name} lt={nextName} color={BREAKPOINT_COLORS[name]}>
-                <BreakpointTitle>{BREAKPOINT_TITLES[name]}</BreakpointTitle>
-                <BreakpointCode>{`$\{breakpoint('${name}'${nextName ? `, '${nextName}'` : ''}) \`/* styles go here */\`}`}</BreakpointCode>
-              </Breakpoint>
-            );
-          })}
+          {
+            Object.keys(breakpoints).map((name, index) => {
+              const nextName = Object.keys(breakpoints)[index + 1];
+              return (
+                <Breakpoint key={name} gte={name} lt={nextName} color={BREAKPOINT_COLORS[name]}>
+                  <BreakpointTitle>{BREAKPOINT_TITLES[name]}</BreakpointTitle>
+                  <BreakpointCode>{`$\{breakpoint('${name}'${nextName ? `, '${nextName}'` : ''}) \`/* styles go here */\`}`}</BreakpointCode>
+                </Breakpoint>
+              );
+            })
+          }
           <Instruction>Try resizing the page. 👉</Instruction>
 
           <H2 id="map">map</H2>
@@ -221,8 +223,8 @@ export default class App extends React.Component<AppProps, AppState> {
           </BreakpointMap>
           <Instruction>Try resizing the page. 👉</Instruction>
 
-        </Main>
-      </ThemeProvider>
+        </Main >
+      </ThemeProvider >
     );
   };
 }
