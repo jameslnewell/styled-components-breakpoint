@@ -6,7 +6,7 @@ Utility functions for creating breakpoints in `styled-components` 💅.
 
 > [Change log](https://github.com/jameslnewell/styled-components-breakpoint/blob/master/CHANGELOG.md)
 
-> Have a look 👀 at [`styled-components-spacing`](https://github.com/jameslnewell/styled-components-spacing) and [`styled-components-grid`](https://github.com/jameslnewell/styled-components-grid) which work  with this package.
+> Have a look 👀 at [`styled-components-spacing`](https://github.com/jameslnewell/styled-components-spacing) and [`styled-components-grid`](https://github.com/jameslnewell/styled-components-grid) which work well with this package.
 
 ## Installation
 
