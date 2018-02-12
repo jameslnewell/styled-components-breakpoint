@@ -1,6 +1,10 @@
 
 # Change log
 
+### 2.0.1
+
+- added missing `./dist` files 😬
+
 #### 2.0.0
 
 - **breaking change:** removed support for non-numeric breakpoint values (so we can perform numerical operations on the breakpoint values)

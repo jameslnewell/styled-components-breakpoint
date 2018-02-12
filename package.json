@@ -1,7 +1,7 @@
 {
   "name": "styled-components-breakpoint",
   "repository": "jameslnewell/styled-components-breakpoint",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Utility functions for creating breakpoints in `styled-components` 💅.",
   "keywords": [
     "react",
@@ -36,8 +36,8 @@
   },
   "scripts": {
     "clean": "tradie clean",
-    "build": "tradie lint",
-    "lint": "tradie build",
+    "lint": "tradie lint",
+    "build": "tradie build",
     "watch": "tradie build --watch",
     "dev": "tradie dev",
     "test": "tradie test",
