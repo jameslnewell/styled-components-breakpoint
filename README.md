@@ -118,7 +118,7 @@ Wraps styles in a `@media` block.
 
 **Properties:**
 - `gte` - Required. A `string`. The name of the breakpoint from which the styles will apply.
-- `lt` - Optional. A `string`. The name of the breakpoint from which the styles will no longer apply.
+- `lt` - Optional. A `string`. The name of the breakpoint at which the styles will no longer apply.
 
 **Returns:**
 
