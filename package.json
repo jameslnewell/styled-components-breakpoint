@@ -45,8 +45,5 @@
     "prepublishOnly": "yarn run clean && yarn run build && yarn run test",
     "postpublish": "yarn run deploy"
   },
-  "license": "MIT",
-  "dependencies": {
-    "babel-eslint": "^8.2.1"
-  }
+  "license": "MIT"
 }

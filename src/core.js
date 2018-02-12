@@ -2,16 +2,17 @@
 /* global process */
 import { css } from 'styled-components';
 
-export type Interpolation =
-  | ((executionContext: Object) => Interpolation)
+export type StyledComponentsInterpolation =
+  | ((executionContext: Object) => StyledComponentsInterpolation)
   | string
   | number
-  | Array<Interpolation>
+  | StyledComponentsInterpolation[]
   ;
+export type StyledComponentsTemplateLiteral = (strings: string[], ...interpolations: StyledComponentsInterpolation[]) => StyledComponentsInterpolation[];
 
 export type BreakpointMap = { [name: string]: number };
-export type BreakpointValueMap<T: string | number> = T | { [name: string]: T };
-export type BreakpointMapValueToCSSFunction<T: string | number> = (value: ?T) => Interpolation; // eslint-disable-line no-undef
+export type BreakpointValueMap<T> = T | { [name: string]: T };
+export type BreakpointMapValueToCSSFunction<T> = (value: ?T) => StyledComponentsInterpolation; // eslint-disable-line no-undef
 
 function convertPxToEm(pixels: number): number {
   // @media is always calculated off 16px regardless of whether the root font size is the default or not
@@ -21,7 +22,7 @@ function convertPxToEm(pixels: number): number {
 function getValueFromName(breakpoints: BreakpointMap, name: string): number {
   const value = breakpoints[name];
   if (process.env.NODE_ENV !== 'production' && typeof value === 'undefined') {
-    console.error(`A breakpoint named "${name}" does not exist.`);
+    console.error(`A breakpoint named "${name}" does not exist.`); // eslint-disable-line no-console
     return 0;
   }
   return value;
@@ -38,14 +39,14 @@ function withSingleCriteria(breakpoints: BreakpointMap, name: string, operator: 
 
   // special case for 0 to avoid wrapping styles in an unnecessary @media block
   if (operator === 'min-width' && value === 0) {
-    return (...args: any[]) => {
-      return css(...args);
+    return function (strings: string[], ...interpolations: StyledComponentsInterpolation[]) {
+      return css(strings, interpolations);
     }
   }
 
-  return (...args: any) => {
+  return function (strings: string[], ...interpolations: StyledComponentsInterpolation[]) {
     return css`@media (${operator}: ${convertPxToEm(value + offset)}em) {
-      ${css(...args)}
+      ${css(strings, interpolations)}
     }`;
   };
 }
@@ -69,9 +70,9 @@ export function _lte(breakpoints: BreakpointMap, name: string) {
 export function _between(breakpoints: BreakpointMap, gte: string, lt: string) {
   const gteValue = getValueFromName(breakpoints, gte);
   const ltValue = getValueFromName(breakpoints, lt);
-  return (...args: any) => {
+  return function (strings: string[], ...interpolations: StyledComponentsInterpolation[]) {
     return css`@media (min-width: ${convertPxToEm(gteValue)}em) and (max-width: ${convertPxToEm(ltValue - 1)}em) {
-      ${css(...args)}
+      ${css(strings, interpolations)}
     }`;
   };
 }
@@ -85,10 +86,10 @@ export function _breakpoint(breakpoints: BreakpointMap, gte: string, lt?: string
 };
 
 // TODO: allow the operator to be customised
-export function _map<T: string | number > (breakpoints: BreakpointMap, value: BreakpointValueMap < T >, mapValueToCSS: BreakpointMapValueToCSSFunction<T>) {
+export function _map<T>(breakpoints: BreakpointMap, value: BreakpointValueMap<T>, mapValueToCSS: BreakpointMapValueToCSSFunction<T>) {
   const values = value;
 
-  if (typeof values === 'string' || typeof values === 'number') {
+  if (values === null || typeof values !== 'object') {
     return mapValueToCSS(values);
   }
 
@@ -98,7 +99,7 @@ export function _map<T: string | number > (breakpoints: BreakpointMap, value: Br
     ...Object.keys(values).map((name: string) => {
       const tag = _gte(breakpoints, name);
       const val = values[name];
-      const styles = tag([].concat(mapValueToCSS(val)));
+      const styles = tag([], [].concat(mapValueToCSS(val)));
       return styles;
     })
   ];

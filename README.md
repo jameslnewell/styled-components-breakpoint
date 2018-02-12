@@ -57,7 +57,7 @@ import Heading from './Heading';
 
 ### Using custom breakpoints
 
-You can customise the provided breakpoint names and values. If you would like to use the same breakpoints as [Bootstrap](https://v4-alpha.getbootstrap.com/layout/overview/#responsive-breakpoints), you can do so like this:
+Breakpoints may be customised using `ThemeProvider`. To use the same breakpoints as [Bootstrap](https://v4-alpha.getbootstrap.com/layout/overview/#responsive-breakpoints), you can do so like this:
 
 `./Heading.jsx`
 ```js
@@ -118,7 +118,7 @@ Wraps styles in a `@media` block.
 
 **Properties:**
 - `gte` - Required. A `string`. The name of the breakpoint from which the styles will apply.
-- `lt` - Optional. A `string`. The name of the breakpoint at where the styles will not apply.
+- `lt` - Optional. A `string`. The name of the breakpoint from which the styles will no longer apply.
 
 **Returns:**
 
@@ -172,8 +172,8 @@ const Thing = styled.div`
 Maps values to styles in `@media` blocks.
 
 **Properties:**
-- `value` - Required. An `object` or `*`. A map of values to breakpoint names.
-- `mapValueToCSS` - Required. A `function`. A function to map a value to styles at the specified breakpoint.
+- `value` - Required. `{[string]: T}` or `T`. A map of values to breakpoint names.
+- `mapValueToCSS` - Required. `T => string`. A function to map a value to styles at the specified breakpoint.
 
 **Returns:**
 
@@ -213,12 +213,13 @@ const Thing = styled.div`
 }
 ```
 
+### `createStatic()`
 ### `createStatic(breakpoints)`
 
 Creates a static set of breakpoints which aren't themable.
 
 **Properties:**
-- `breakpoints` - Optional. An `object`. A map of breakpoint names and sizes.
+- `breakpoints` - Optional. `{[string]: number}`. A map of breakpoint names and sizes.
 
 **Returns:**
 

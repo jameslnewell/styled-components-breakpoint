@@ -42,6 +42,7 @@ const BREAKPOINT_COLORS = {
 
 const STATIC_BREAKPOINTS = createStatic();
 
+
 /* eslint-disable no-unused-expressions */
 injectGlobal`
 
@@ -67,6 +68,7 @@ injectGlobal`
   }
 
 `;
+
 /* eslint-enable no-unused-expressions */
 
 const whitelistedDiv = createComponentFromTagProp({
@@ -75,6 +77,7 @@ const whitelistedDiv = createComponentFromTagProp({
 });
 
 const Main = styled.main`
+  padding-bottom: 1em;
 `;
 
 const H1 = styled.h1`
@@ -89,6 +92,18 @@ const P = styled.p`
   margin: 1em 0;
 `;
 
+const Grid = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Col1 = styled.div`
+  flex-grow: 1;
+`;
+
+const Col2 = styled.div`
+`;
+
 const Button = styled.button`
   padding: 0.5em;
   font-size: 1em;
@@ -96,7 +111,7 @@ const Button = styled.button`
 `;
 
 const Instruction = styled.blockquote`
-  margin: 1em 3em;
+  margin: 0;
   font-size: 0.9em;
   font-weight: bold;
   text-align: right;
@@ -130,25 +145,25 @@ const BreakpointMap = styled(whitelistedDiv) `
 `;
 
 const BreakpointTitle = styled.div`
-flex - shrink: 0;
-width: 5em;
-font - weight: bold;
-${
+  flex-shrink: 0;
+  width: 5em;
+  font-weight: bold;
+  ${
   ({ text = {} }) => map(text, (val = '') => {
     return `:before {
-      content: '${val || ''}';
-  }`;
+        content: '${val || ''}';
+    }`;
   })
   }
 `;
 
 const BreakpointCode = styled.pre`
-margin - right: 1em;
-flex - grow: 1;
-color: #666;
-text - overflow: ellipsis;
-white - space: nowrap;
-overflow: hidden;
+  margin-right: 1em;
+  flex-grow: 1;
+  color: #666;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 export type AppProps = {
@@ -186,9 +201,16 @@ export default class App extends React.Component<AppProps, AppState> {
         <Main>
           <H1>styled-components-breakpoint</H1>
 
-          <Button onClick={this.handleToggleBreakpoints}>
-            {breakpoints === DEFAULT_BREAKPOINTS ? 'Use default breakpoints' : 'Use custom breakpoints'}
-          </Button>
+          <Grid>
+            <Col1>
+              <Button onClick={this.handleToggleBreakpoints}>
+                {breakpoints === DEFAULT_BREAKPOINTS ? 'Use default breakpoints' : 'Use custom breakpoints'}
+              </Button>
+            </Col1>
+            <Col2>
+              <Instruction>Try resizing the page. 👉</Instruction>
+            </Col2>
+          </Grid>
 
           <H2 id="gte">gte</H2>
           <P>Greater than or equal to.</P>
@@ -198,7 +220,6 @@ export default class App extends React.Component<AppProps, AppState> {
               <BreakpointCode>{`$\{ breakpoint('${name}') \`/* styles go here */\`}`}</BreakpointCode >
             </Breakpoint >
           ))}
-          <Instruction>Try resizing the page. 👉</Instruction>
 
           <H2 id="gte-and-lt">gte and lt</H2>
           <P>Greater than or equal to X but less than Y.</P>
@@ -213,7 +234,6 @@ export default class App extends React.Component<AppProps, AppState> {
               );
             })
           }
-          <Instruction>Try resizing the page. 👉</Instruction>
 
           <H2 id="map">map</H2>
           <P>Map a value to styles for each breakpoint where a value is specified.</P>
@@ -221,7 +241,6 @@ export default class App extends React.Component<AppProps, AppState> {
             <BreakpointTitle text={titles} />
             <BreakpointCode>{`$\{map(${JSON.stringify(colors, null, 2)}, (color) => \`/* styles go here */\`}`}</BreakpointCode>
           </BreakpointMap>
-          <Instruction>Try resizing the page. 👉</Instruction>
 
         </Main >
       </ThemeProvider >

@@ -1,13 +1,10 @@
 // @flow
 import {
+  type StyledComponentsInterpolation,
+  type StyledComponentsTemplateLiteral,
   type BreakpointMap,
   type BreakpointValueMap,
   type BreakpointMapValueToCSSFunction,
-  // _gt,
-  // _gte,
-  // _lt,
-  // _lte,
-  // _between,
   _breakpoint,
   _map
 } from './core';
@@ -24,31 +21,27 @@ type ComponentProps = {
   }
 };
 
-// export function gt(name: string) {
-//   return (strings: string[], ...args: any[]) => ({ theme = {} }: ComponentProps) => _gt(theme.breakpoints || defaultBreakpoints, name)(strings, ...args);
-// }
-
-// export function gte(name: string) {
-//   return (strings: string[], ...args: any[]) => ({ theme = {} }: ComponentProps) => _gte(theme.breakpoints || defaultBreakpoints, name)(strings, ...args);
-// }
-
-// export function lt(name: string) {
-//   return (strings: string[], ...args: any[]) => ({ theme = {} }: ComponentProps) => _lt(theme.breakpoints || defaultBreakpoints, name)(strings, ...args);
-// }
-
-// export function lte(name: string) {
-//   return (strings: string[], ...args: any[]) => ({ theme = {} }: ComponentProps) => _lte(theme.breakpoints || defaultBreakpoints, name)(strings, ...args);
-// }
-
 function breakpoint(gte: string, lt?: string) {
-  return (strings: string[], ...args: any[]) => ({ theme = {} }: ComponentProps) => _breakpoint(theme.breakpoints || defaultBreakpoints, gte, lt)(strings, ...args);
+  return function (strings: string[], ...interpolations: StyledComponentsInterpolation[]) {
+    return function ({ theme = {} }: ComponentProps) {
+      return _breakpoint(theme.breakpoints || defaultBreakpoints, gte, lt)(strings, ...interpolations);
+    };
+  };
 }
 
-export function map<T: string | number > (value: BreakpointValueMap < T >, mapValueToCSS: BreakpointMapValueToCSSFunction<T>) {
-  return ({ theme = {} }: ComponentProps) => _map(theme.breakpoints || defaultBreakpoints, value, mapValueToCSS);
+export function map<T>(value: BreakpointValueMap<T>, mapValueToCSS: BreakpointMapValueToCSSFunction<T>) {
+  return function ({ theme = {} }: ComponentProps) {
+    return _map(theme.breakpoints || defaultBreakpoints, value, mapValueToCSS);
+  };
 }
 
-export function createStatic(breakpoints: BreakpointMap = defaultBreakpoints): { [name: string]: Function } {
+export type StaticBreakpoints = {
+  [name: string]: StyledComponentsTemplateLiteral;
+  breakpoint: (gte: string, lt?: string) => StyledComponentsTemplateLiteral;
+  map: <T: string | number > (value: BreakpointValueMap < T >, mapValueToCSS: BreakpointMapValueToCSSFunction<T>) => StyledComponentsInterpolation; // eslint-disable-line no-undef
+};
+
+export function createStatic(breakpoints: BreakpointMap = defaultBreakpoints): StaticBreakpoints {
   return Object.keys(breakpoints).reduce((accum, name) => {
     accum[name] = _breakpoint(breakpoints, name);
     return accum;
