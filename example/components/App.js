@@ -208,7 +208,7 @@ export default class App extends React.Component<AppProps, AppState> {
               </Button>
             </Col1>
             <Col2>
-              <Instruction>Try resizing the page. 👉</Instruction>
+              <Instruction>Try resizing the window. 👉</Instruction>
             </Col2>
           </Grid>
 
