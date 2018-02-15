@@ -204,7 +204,7 @@ export default class App extends React.Component<AppProps, AppState> {
           <Grid>
             <Col1>
               <Button onClick={this.handleToggleBreakpoints}>
-                {breakpoints === DEFAULT_BREAKPOINTS ? 'Use default breakpoints' : 'Use custom breakpoints'}
+                {breakpoints === DEFAULT_BREAKPOINTS ? 'Use custom breakpoints' : 'Use default breakpoints'}
               </Button>
             </Col1>
             <Col2>

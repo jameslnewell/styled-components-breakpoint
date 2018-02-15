@@ -59,7 +59,7 @@ import Heading from './Heading';
 
 ### Using custom breakpoints
 
-Breakpoints may be customised using `ThemeProvider`. For example, to use the same breakpoints as [Bootstrap](https://v4-alpha.getbootstrap.com/layout/overview/#responsive-breakpoints), you can do so like this:
+Breakpoints may be customised using `ThemeProvider`. For example, to use the same breakpoints as [Bootstrap](https://getbootstrap.com/docs/4.0/layout/overview/#responsive-breakpoints), you can do so like this:
 
 `./Heading.jsx`
 ```js
