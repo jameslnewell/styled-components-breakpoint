@@ -1,7 +1,7 @@
 {
   "name": "styled-components-breakpoint",
   "repository": "jameslnewell/styled-components-breakpoint",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Utility functions for creating breakpoints in `styled-components` 💅.",
   "keywords": [
     "react",
@@ -28,6 +28,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.1",
     "gh-pages": "^1.1.0",
+    "husky": "^0.14.3",
     "jest-styled-components": "^4.11.0-1",
     "react": "^16.2.0",
     "react-create-component-from-tag-prop": "^1.3.1",
@@ -43,7 +44,8 @@
     "test": "tradie test",
     "deploy": "gh-pages -d \"./dist/example\"",
     "prepublishOnly": "yarn run clean && yarn run build && yarn run test",
-    "postpublish": "yarn run deploy"
+    "postpublish": "yarn run deploy",
+    "precommit": "yarn run test"
   },
   "license": "MIT"
 }

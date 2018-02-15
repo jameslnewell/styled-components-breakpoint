@@ -1,6 +1,10 @@
 
 # Change log
 
+### 2.0.2
+
+- fixed use of multiple expressions [#11](https://github.com/jameslnewell/styled-components-breakpoint/issues/11)
+
 ### 2.0.1
 
 - added missing `./dist` files 😬

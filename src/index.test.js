@@ -14,7 +14,7 @@ const customBreakpoints = {
 describe('breakpoint()', () => {
 
   const DefaultThing = styled.h1`
-          
+
     ${breakpoint('mobile') `
       font-size: 12px;
     `}
@@ -59,6 +59,21 @@ describe('breakpoint()', () => {
     expect(element).toHaveStyleRule('font-size', '12px', { media: '(min-width:20em)' });
     expect(element).toHaveStyleRule('font-size', '16px', { media: '(min-width:60em)' });
     expect(element).toHaveStyleRule('font-size', '24px', { media: '(min-width:180em)' });
+  });
+
+  // https://github.com/jameslnewell/styled-components-breakpoint/issues/11
+  it('should render multiple expressions correctly #11', () => {
+    const Thing = styled.div`
+      ${breakpoint('tablet') `
+        background: ${'grey'};
+        color: ${'white'};
+      `}
+    `;
+    const element = shallow(
+      <Thing />
+    );
+    expect(element).toHaveStyleRule('background', 'grey', { media: '(min-width:46.0625em)' });
+    expect(element).toHaveStyleRule('color', 'white', { media: '(min-width:46.0625em)' });
   });
 
 });

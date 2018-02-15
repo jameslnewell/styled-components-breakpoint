@@ -40,13 +40,14 @@ function withSingleCriteria(breakpoints: BreakpointMap, name: string, operator: 
   // special case for 0 to avoid wrapping styles in an unnecessary @media block
   if (operator === 'min-width' && value === 0) {
     return function (strings: string[], ...interpolations: StyledComponentsInterpolation[]) {
-      return css(strings, interpolations);
+      return css(strings, ...interpolations);
     }
   }
 
+
   return function (strings: string[], ...interpolations: StyledComponentsInterpolation[]) {
     return css`@media (${operator}: ${convertPxToEm(value + offset)}em) {
-      ${css(strings, interpolations)}
+      ${css(strings, ...interpolations)}
     }`;
   };
 }
@@ -72,7 +73,7 @@ export function _between(breakpoints: BreakpointMap, gte: string, lt: string) {
   const ltValue = getValueFromName(breakpoints, lt);
   return function (strings: string[], ...interpolations: StyledComponentsInterpolation[]) {
     return css`@media (min-width: ${convertPxToEm(gteValue)}em) and (max-width: ${convertPxToEm(ltValue - 1)}em) {
-      ${css(strings, interpolations)}
+      ${css(strings, ...interpolations)}
     }`;
   };
 }
