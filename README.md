@@ -1,12 +1,12 @@
 # styled-components-breakpoint
 
-[![Build Status](https://travis-ci.org/jameslnewell/styled-components-breakpoint.svg?branch=master)](https://travis-ci.org/jameslnewell/styled-components-breakpoint)
+![npm](https://img.shields.io/npm/v/styled-components-breakpoint.svg) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/styled-components-breakpoint.svg) ![npm](https://img.shields.io/npm/dm/styled-components-breakpoint.svg) [![Build Status](https://travis-ci.org/jameslnewell/styled-components-breakpoint.svg?branch=master)](https://travis-ci.org/jameslnewell/styled-components-breakpoint)
 
 Utility functions for creating breakpoints in `styled-components` 💅.
 
 > [Change log](https://github.com/jameslnewell/styled-components-breakpoint/blob/master/CHANGELOG.md)
 
-> Have a look 👀 at [`styled-components-spacing`](https://github.com/jameslnewell/styled-components-spacing) and [`styled-components-grid`](https://github.com/jameslnewell/styled-components-grid) which work well with this package.
+> Have a look 👀 at [`styled-components-spacing`](https://github.com/jameslnewell/styled-components-spacing) and [`styled-components-grid`](https://github.com/jameslnewell/styled-components-grid) which both work well with this package.
 
 ## Installation
 

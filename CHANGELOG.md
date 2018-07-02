@@ -1,6 +1,11 @@
 
 # Change log
 
+### 2.1.0
+
+- added the `module` field
+- added badges to README
+
 ### 2.0.2
 
 - fixed use of multiple expressions [#11](https://github.com/jameslnewell/styled-components-breakpoint/issues/11)

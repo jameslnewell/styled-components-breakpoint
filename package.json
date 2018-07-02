@@ -1,7 +1,7 @@
 {
   "name": "styled-components-breakpoint",
   "repository": "jameslnewell/styled-components-breakpoint",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Utility functions for creating breakpoints in `styled-components` 💅.",
   "keywords": [
     "react",
@@ -14,6 +14,7 @@
     "desktop"
   ],
   "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "jsnext:main": "dist/esm/index.js",
   "files": [
     "dist/cjs",
