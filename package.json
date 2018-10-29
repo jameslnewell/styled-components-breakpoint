@@ -1,7 +1,7 @@
 {
   "name": "styled-components-breakpoint",
   "repository": "jameslnewell/styled-components-breakpoint",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Utility functions for creating breakpoints in `styled-components` 💅.",
   "keywords": [
     "react",
@@ -21,7 +21,7 @@
     "dist/esm"
   ],
   "peerDependencies": {
-    "styled-components": ">= 1 < 4"
+    "styled-components": ">= 1"
   },
   "devDependencies": {
     "@tradie/react-component-scripts": "^1.0.0-alpha.a573b72a",
