@@ -1,7 +1,6 @@
 {
   "name": "styled-components-breakpoint",
-  "repository": "jameslnewell/styled-components-breakpoint",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Utility functions for creating breakpoints in `styled-components` 💅.",
   "keywords": [
     "react",
@@ -13,40 +12,57 @@
     "tablet",
     "desktop"
   ],
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "jsnext:main": "dist/esm/index.js",
+  "repository": "jameslnewell/styled-components-breakpoint",
   "files": [
-    "dist/cjs",
-    "dist/esm"
+    "dist"
   ],
+  "source": "src/index.ts",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "peerDependencies": {
-    "styled-components": ">= 1 < 4"
+    "@types/styled-components": "^4.1.18",
+    "styled-components": ">= 1 <= 4"
   },
   "devDependencies": {
-    "@tradie/react-component-scripts": "^1.0.0-alpha.a573b72a",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "enzyme-to-json": "^3.3.1",
-    "gh-pages": "^1.1.0",
-    "husky": "^0.14.3",
-    "jest-styled-components": "^4.11.0-1",
-    "react": "^16.2.0",
-    "react-create-component-from-tag-prop": "^1.3.1",
-    "react-dom": "^16.2.0",
-    "styled-components": "^3.1.6"
+    "@jameslnewell/editor-config": "^1.0.1",
+    "@jameslnewell/eslint-config": "^0.12.0",
+    "@jameslnewell/jest-preset-test": "^4.0.0",
+    "@jameslnewell/prettier-config": "^1.0.1",
+    "@jameslnewell/typescript-config": "^3.0.0",
+    "@testing-library/react": "^9.1.4",
+    "@types/jest": "^24.0.18",
+    "@types/react": "^16.9.2",
+    "@types/styled-components": "^4.1.18",
+    "eslint": "^6.3.0",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "jest-styled-components": "^6.3.3",
+    "lint-staged": "^9.2.5",
+    "microbundle": "^0.11.0",
+    "prettier": "^1.18.2",
+    "react": "^16.9.0",
+    "styled-components": "^4.3.2",
+    "typescript": "^3.6.2"
   },
   "scripts": {
-    "clean": "tradie clean",
-    "lint": "tradie lint",
-    "build": "tradie build",
-    "watch": "tradie build --watch",
-    "dev": "tradie dev",
-    "test": "tradie test",
-    "deploy": "gh-pages -d \"./dist/example\"",
-    "prepublishOnly": "yarn run clean && yarn run build && yarn run test",
-    "postpublish": "yarn run deploy",
-    "precommit": "yarn run test"
+    "clean": "rm -rf dist",
+    "check:lint": "eslint --fix --ext .ts,.js,.jsx src",
+    "check:types": "tsc --noEmit --project tsconfig.json",
+    "check": "yarn run check:lint && yarn run check:types",
+    "build": "microbundle build",
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{md,json,js,jsx,ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "license": "MIT"
 }

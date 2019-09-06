@@ -1,6 +1,4 @@
-.vscode
-.idea
-node_modules
 dist
-yarn.lock
-package-lock.json
+node_modules
+yarn-error.log
+.rts2_cache*
