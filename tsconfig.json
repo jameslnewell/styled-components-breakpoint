@@ -1,0 +1,7 @@
+{
+  "extends": "./node_modules/@jameslnewell/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "lib": ["esnext"]
+  },
+  "include": ["src", "test", "typings"]
+}
