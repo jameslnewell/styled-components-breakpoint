@@ -1,4 +1,5 @@
 dist
+.cache
 node_modules
 yarn-error.log
 .rts2_cache*

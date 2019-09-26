@@ -1,29 +1,74 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {gte, between} from '../../src';
+import {breakpoint, map} from '../../src';
 
-const Square = styled.div`
+const square = `
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 256px;
   height: 256px;
   margin: auto;
-  align-items: center;
-  justify-content: center;
   font-size: 48px;
-  ${gte('mobile')`
+  :after {
+    display: inline-block;
+  }
+`;
+
+const Breakpoint = styled.div`
+  ${square}
+  ${breakpoint('mobile')`
     background-color: deepskyblue;
-    :after {display: inline-block; content: "📱";}
+    :after {content: "📱";}
   `}
-  ${gte('tablet')`
+  ${breakpoint('tablet')`
     background-color: orangered;
-    :after {display: inline-block; content: "💻";}
+    :after {content: "💻";}
   `}
-  ${gte('desktop')`
+  ${breakpoint('desktop')`
     background-color: deeppink;
-    :after {display: inline-block; content: "🖥";}
+    :after {content: "🖥";}
   `}
 `;
 
+const Map = styled.div`
+  ${square}
+  background-color: deepskyblue;
+  ${map(
+    {mobile: '📱', tablet: '💻', desktop: '🖥'},
+    value => `:after {content "${value}";}`,
+  )}
+  ${map(
+    {mobile: 'deepskyblue', tablet: 'orangered', desktop: 'deeppink'},
+    value => `background-color: ${value};`,
+  )}
+`;
+
+const PartialMap = styled.div`
+  ${square}
+  background-color: deepskyblue;
+  ${map(
+    {mobile: 'red', desktop: 'green'},
+    value => `background-color: ${value};`,
+  )}
+`;
+
+const UnOrderedMap = styled.div`
+  ${square}
+  background-color: deepskyblue;
+  ${map(
+    {desktop: 'green', mobile: 'red'},
+    value => `background-color: ${value};`,
+  )}
+`;
+
 export const App: React.FC = () => {
-  return <Square />;
+  return (
+    <>
+      <Breakpoint />
+      <Map />
+      <PartialMap />
+      <UnOrderedMap />
+    </>
+  );
 };
