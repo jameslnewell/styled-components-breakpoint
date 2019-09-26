@@ -1,6 +1,6 @@
 {
   "name": "styled-components-breakpoint",
-  "version": "3.0.0",
+  "version": "3.0.0-preview.1",
   "description": "Utility functions for creating breakpoints in `styled-components` 💅.",
   "keywords": [
     "react",
@@ -48,7 +48,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "check:lint": "eslint --fix --ext .ts,.js,.jsx src",
+    "check:linting": "eslint --fix --ext .ts,.js,.jsx src",
     "check:types": "tsc --noEmit --project tsconfig.json",
     "check": "yarn run check:lint && yarn run check:types",
     "build": "microbundle build",

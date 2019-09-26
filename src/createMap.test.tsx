@@ -2,8 +2,8 @@ import 'jest-styled-components';
 import * as React from 'react';
 import styled from 'styled-components';
 import {render} from '@testing-library/react';
-import {ValueOrValueMap} from './types';
-import {defaults, DefaultBreakpoint} from './defaults';
+import {ValueOrValues, DefaultBreakpoint} from './types';
+import {defaults} from './defaults';
 import {convertPxToEm} from './convertPxToEm';
 import {createMap} from './createMap';
 
@@ -11,7 +11,7 @@ describe('createMap()', () => {
   const map = createMap(defaults);
   const consoleWarnSpy = jest.spyOn(console, 'warn');
 
-  const Text = styled.p<{size: ValueOrValueMap<DefaultBreakpoint, number>}>`
+  const Text = styled.p<{size: ValueOrValues<DefaultBreakpoint, number>}>`
     ${({size}) => map(size, s => `font-size: ${s}px;`)}
   `;
 
@@ -35,10 +35,10 @@ describe('createMap()', () => {
     });
   });
 
-  test('logged a warning if breakpoints were not keyed in increasing order', () => {
+  test('logged a warning if breakpoints were not ordered', () => {
     render(<Text size={{tablet: 16, mobile: 12, desktop: 24}} />);
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      'styled-components-breakpoint: Values for "tablet", "mobile", "desktop" are not keyed in order ("mobile", "tablet", "desktop") and may result in specificity issues.',
+      'styled-components-breakpoint: Values for {"tablet":16,"mobile":12,"desktop":24} are not keyed in order ("mobile", "tablet", "desktop") and may result in specificity issues.',
     );
   });
 });

@@ -4,13 +4,14 @@ import styled, {DefaultTheme, ThemeProvider} from 'styled-components';
 import {render} from '@testing-library/react';
 import {defaults} from './defaults';
 import {convertPxToEm} from './convertPxToEm';
-import {breakpoint} from './breakpoint';
+import {map} from './map';
 
-describe('breakpoint()', () => {
+describe('map()', () => {
   const Example = styled.div`
-    ${breakpoint('mobile')`color: red;`}
-    ${breakpoint('tablet')`color: green;`}
-    ${breakpoint('desktop')`color: blue;`}
+    ${map(
+      {mobile: 'red', tablet: 'green', desktop: 'blue'},
+      color => `color: ${color};`,
+    )}
   `;
 
   test('use of default breakpoints', () => {

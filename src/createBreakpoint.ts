@@ -5,7 +5,7 @@ import {convertPxToEm} from './convertPxToEm';
 const getBreakpointPixels = <B extends string | number>(
   breakpoints: Breakpoints<B>,
   breakpoint: B,
-) => {
+): number => {
   if (!(breakpoint in breakpoints)) {
     console.error(
       `styled-components-breakpoint: Breakpoint "${breakpoint}" was not found.`,
