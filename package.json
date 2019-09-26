@@ -27,7 +27,6 @@
   "devDependencies": {
     "@jameslnewell/editor-config": "^1.0.1",
     "@jameslnewell/eslint-config": "^0.12.0",
-    "@jameslnewell/jest-preset-test": "^4.0.0",
     "@jameslnewell/prettier-config": "^1.0.1",
     "@jameslnewell/typescript-config": "^3.0.0",
     "@testing-library/react": "^9.1.4",
@@ -65,5 +64,8 @@
       "git add"
     ]
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@jameslnewell/jest-preset-test": "^4.0.0"
+  }
 }
