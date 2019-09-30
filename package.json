@@ -51,10 +51,11 @@
     "check:linting": "eslint --fix --ext .ts,.js,.jsx src",
     "check:types": "tsc --noEmit --project tsconfig.json",
     "check": "yarn run check:linting && yarn run check:types",
-    "build": "microbundle build",
+    "build": "microbundle build && parcel build example/src/index.html",
     "test": "jest",
+    "deploy": "gh-pages -d example/dist",
     "start": "parcel example/src/index.html",
-    "prepublishOnly": "yarn run clean && yarn run check && yarn run build && yarn run test"
+    "prepublishOnly": "yarn run clean && yarn run check && yarn run build && yarn run test && yarn run deploy"
   },
   "husky": {
     "hooks": {
