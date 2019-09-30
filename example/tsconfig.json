@@ -1,0 +1,5 @@
+{
+  "extends": "../node_modules/@jameslnewell/typescript-config/tsconfig.json",
+  "include": ["./src", "./test", "./typings"],
+  "exclude": ["node_modules"]
+}

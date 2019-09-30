@@ -5,12 +5,6 @@
     "lib": ["esnext", "dom"],
     "outDir": "dist"
   },
-  "include": [
-    "./src",
-    "./test",
-    "./typings",
-    "./example/src",
-    "./example/typings"
-  ],
+  "include": ["./src", "./test", "./typings"],
   "exclude": ["node_modules"]
 }
