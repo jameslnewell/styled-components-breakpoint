@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import * as React from 'react';
 import {ThemeProvider} from 'styled-components';
 import {
   ExampleBreakpoints,
@@ -30,7 +30,7 @@ export type AppState = {
 };
 
 export const App: React.FC = () => {
-  const [breakpoints, setBreakpoints] = useState<ExampleBreakpoints>(
+  const [breakpoints, setBreakpoints] = React.useState<ExampleBreakpoints>(
     defaultBreakpoints,
   );
 

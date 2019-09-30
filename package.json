@@ -51,7 +51,7 @@
   "scripts": {
     "clean": "rm -rf dist .cache .rts2_cache* example/dist example.cache",
     "check:linting": "eslint --fix --ext .ts,.js,.jsx src",
-    "check:types": "tsc --noEmit --project tsconfig.json",
+    "check:types": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project example/tsconfig.json",
     "check": "yarn run check:linting && yarn run check:types",
     "build:bundle": "microbundle build -f es,cjs --tsconfig tsconfig.build.json",
     "build:example": "parcel build example/src/index.html --out-dir example/dist",
