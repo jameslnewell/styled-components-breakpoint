@@ -54,7 +54,7 @@
     "check:types": "tsc --noEmit --project tsconfig.json && tsc --noEmit --project example/tsconfig.json",
     "check": "yarn run check:linting && yarn run check:types",
     "build:bundle": "microbundle build -f es,cjs --tsconfig tsconfig.build.json",
-    "build:example": "parcel build example/src/index.html --out-dir example/dist",
+    "build:example": "parcel build example/src/index.html --public-url /styled-components-breakpoint --out-dir example/dist",
     "build": "yarn run build:bundle && yarn run build:example",
     "test": "jest",
     "deploy": "gh-pages -d example/dist",
