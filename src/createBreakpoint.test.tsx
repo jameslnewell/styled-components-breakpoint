@@ -12,20 +12,46 @@ describe('createBreakpoint()', () => {
 
   afterEach(() => consoleErrorSpy.mockReset());
 
+  test('rendered styles using a CSSObject', () => {
+    const GreaterThanOrEqualExample = styled.p`
+
+      ${breakpoint('mobile')({
+        fontSize: '12px',
+      })}
+
+      ${breakpoint('tablet')({
+        fontSize: '16px',
+      })}
+
+      ${breakpoint('desktop')({
+        fontSize: '24px',
+      })}
+
+    `;
+    const {container} = render(<GreaterThanOrEqualExample />);
+    expect(container.firstChild).toHaveStyleRule('font-size', '12px');
+    expect(container.firstChild).toHaveStyleRule('font-size', '16px', {
+      media: `screen and (min-width:${convertPxToEm(defaults.tablet)}em)`,
+    });
+    expect(container.firstChild).toHaveStyleRule('font-size', '24px', {
+      media: `screen and (min-width:${convertPxToEm(defaults.desktop)}em)`,
+    });
+  });
+
   test('rendered styles from each breakpoint', () => {
     const GreaterThanOrEqualExample = styled.p`
 
-    ${breakpoint('mobile')`
-      font-size: 12px;
-    `}
+      ${breakpoint('mobile')`
+        font-size: 12px;
+      `}
 
-    ${breakpoint('tablet')`
-      font-size: 16px;
-    `}
+      ${breakpoint('tablet')`
+        font-size: 16px;
+      `}
 
-    ${breakpoint('desktop')`
-      font-size: 24px;
-    `}
+      ${breakpoint('desktop')`
+        font-size: 24px;
+      `}
 
   `;
     const {container} = render(<GreaterThanOrEqualExample />);
@@ -41,17 +67,17 @@ describe('createBreakpoint()', () => {
   test('rendered styles between breakpoints', () => {
     const BetweenExample = styled.p`
 
-    ${breakpoint('mobile', 'tablet')`
-      font-size: 12px;
-    `}
+      ${breakpoint('mobile', 'tablet')`
+        font-size: 12px;
+      `}
 
-    ${breakpoint('tablet', 'desktop')`
-      font-size: 16px;
-    `}
+      ${breakpoint('tablet', 'desktop')`
+        font-size: 16px;
+      `}
 
-    ${breakpoint('desktop')`
-      font-size: 24px;
-    `}
+      ${breakpoint('desktop')`
+        font-size: 24px;
+      `}
 
   `;
     const {container} = render(<BetweenExample />);

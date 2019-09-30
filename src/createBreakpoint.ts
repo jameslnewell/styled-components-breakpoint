@@ -1,4 +1,4 @@
-import {css, SimpleInterpolation} from 'styled-components';
+import {css, SimpleInterpolation, CSSObject} from 'styled-components';
 import {Breakpoints} from './types';
 import {convertPxToEm} from './convertPxToEm';
 
@@ -19,7 +19,7 @@ export const createBreakpoint = <B extends string | number>(
   breakpoints: Breakpoints<B>,
 ) => (breakpointA: B, breakpointB?: B) => {
   return (
-    strings: TemplateStringsArray,
+    strings: TemplateStringsArray | CSSObject,
     ...interpolations: SimpleInterpolation[]
   ) => {
     if (breakpointA && breakpointB) {

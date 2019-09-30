@@ -1,4 +1,4 @@
-import {SimpleInterpolation, StyledProps} from 'styled-components';
+import {SimpleInterpolation, StyledProps, CSSObject} from 'styled-components';
 import {ThemeBreakpoint, Breakpoints} from './types';
 import {defaults} from './defaults';
 import {createBreakpoint} from './createBreakpoint';
@@ -8,7 +8,7 @@ export const breakpoint = (
   breakpointB?: ThemeBreakpoint,
 ) => {
   return (
-    strings: TemplateStringsArray,
+    strings: TemplateStringsArray | CSSObject,
     ...interpolations: SimpleInterpolation[]
   ) => {
     return <P extends object>({theme}: StyledProps<P>) => {
