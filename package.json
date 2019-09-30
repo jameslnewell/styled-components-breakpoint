@@ -1,6 +1,6 @@
 {
   "name": "styled-components-breakpoint",
-  "version": "3.0.0-preview.1",
+  "version": "3.0.0-preview.3",
   "description": "Utility functions for creating breakpoints in `styled-components` 💅.",
   "keywords": [
     "react",
@@ -17,7 +17,7 @@
     "dist"
   ],
   "source": "src/index.ts",
-  "main": "dist/index.cjs.js",
+  "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "peerDependencies": {
@@ -29,11 +29,13 @@
     "@jameslnewell/eslint-config": "^0.12.0",
     "@jameslnewell/prettier-config": "^1.0.1",
     "@jameslnewell/typescript-config": "^3.0.0",
+    "@jameslnewell/jest-preset-test": "^4.0.0",
     "@testing-library/react": "^9.1.4",
     "@types/jest": "^24.0.18",
     "@types/react": "^16.9.2",
     "@types/styled-components": "^4.1.19",
     "eslint": "^6.3.0",
+    "gh-pages": "^2.1.1",
     "husky": "^3.0.5",
     "jest": "^24.9.0",
     "jest-styled-components": "^6.3.3",
@@ -51,7 +53,9 @@
     "check:linting": "eslint --fix --ext .ts,.js,.jsx src",
     "check:types": "tsc --noEmit --project tsconfig.json",
     "check": "yarn run check:linting && yarn run check:types",
-    "build": "microbundle build && parcel build example/src/index.html",
+    "build:bundle": "microbundle build -f es,cjs",
+    "build:example": "parcel build example/src/index.html --out-dir example/dist",
+    "build": "yarn run build:bundle && yarn run build:example",
     "test": "jest",
     "deploy": "gh-pages -d example/dist",
     "start": "parcel example/src/index.html",
@@ -68,8 +72,5 @@
       "git add"
     ]
   },
-  "license": "MIT",
-  "dependencies": {
-    "@jameslnewell/jest-preset-test": "^4.0.0"
-  }
+  "license": "MIT"
 }

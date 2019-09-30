@@ -2,8 +2,15 @@
   "extends": "./node_modules/@jameslnewell/typescript-config/tsconfig.json",
   "compilerOptions": {
     "jsx": "react",
-    "lib": ["esnext", "dom"]
+    "lib": ["esnext", "dom"],
+    "outDir": "dist"
   },
-  "include": ["src", "test", "typings", "example/src", "example/typings"],
+  "include": [
+    "./src",
+    "./test",
+    "./typings",
+    "./example/src",
+    "./example/typings"
+  ],
   "exclude": ["node_modules"]
 }
