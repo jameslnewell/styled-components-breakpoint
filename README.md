@@ -206,16 +206,14 @@ export const defaults = {
    `styled.d.ts`
 
    ```tsx
-   import {DefaultTheme} from 'styled-components'
+   import {DefaultTheme} from 'styled-components';
 
    declare module 'styled-components' {
-
      export interface DefaultTheme {
        breakpoints: {
-         [name in 'xs', 'sm' | 'md' | 'lg' | 'xl']: number;
+         [name in 'xs' | 'sm' | 'md' | 'lg' | 'xl']: number;
        };
      }
-
    }
    ```
 

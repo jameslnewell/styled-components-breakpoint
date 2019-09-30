@@ -21,7 +21,7 @@
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "peerDependencies": {
-    "@types/styled-components": "^4.1.18",
+    "@types/styled-components": "^4.1.19",
     "styled-components": ">= 1 <= 4"
   },
   "devDependencies": {
@@ -32,13 +32,14 @@
     "@testing-library/react": "^9.1.4",
     "@types/jest": "^24.0.18",
     "@types/react": "^16.9.2",
-    "@types/styled-components": "^4.1.18",
+    "@types/styled-components": "^4.1.19",
     "eslint": "^6.3.0",
     "husky": "^3.0.5",
     "jest": "^24.9.0",
     "jest-styled-components": "^6.3.3",
     "lint-staged": "^9.2.5",
     "microbundle": "^0.11.0",
+    "parcel-bundler": "^1.12.3",
     "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -49,9 +50,11 @@
     "clean": "rm -rf dist",
     "check:linting": "eslint --fix --ext .ts,.js,.jsx src",
     "check:types": "tsc --noEmit --project tsconfig.json",
-    "check": "yarn run check:lint && yarn run check:types",
+    "check": "yarn run check:linting && yarn run check:types",
     "build": "microbundle build",
-    "test": "jest"
+    "test": "jest",
+    "start": "parcel example/src/index.html",
+    "prepublishOnly": "yarn run clean && yarn run check && yarn run build && yarn run test"
   },
   "husky": {
     "hooks": {
