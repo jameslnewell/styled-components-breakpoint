@@ -24,15 +24,15 @@ jobs:
 
     - name: check
       run: |
-        yarn check
+        yarn run check
 
     - name: build
       run: |
-        yarn build
+        yarn run build
 
     - name: test
       run: |
-        yarn test
+        yarn run test
       
 
       
