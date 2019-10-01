@@ -1,9 +1,9 @@
-import {css, SimpleInterpolation, CSSObject} from 'styled-components';
-import {Breakpoints} from './types';
+import {css} from 'styled-components';
+import {BreakpointMap} from './types';
 import {convertPxToEm} from './convertPxToEm';
 
 const getBreakpointPixels = <B extends string | number>(
-  breakpoints: Breakpoints<B>,
+  breakpoints: BreakpointMap<B>,
   breakpoint: B,
 ): number => {
   if (!(breakpoint in breakpoints)) {
@@ -16,12 +16,9 @@ const getBreakpointPixels = <B extends string | number>(
 };
 
 export const createBreakpoint = <B extends string | number>(
-  breakpoints: Breakpoints<B>,
-) => (breakpointA: B, breakpointB?: B) => {
-  return (
-    strings: TemplateStringsArray | CSSObject,
-    ...interpolations: SimpleInterpolation[]
-  ) => {
+  breakpoints: BreakpointMap<B>,
+) => (breakpointA: B, breakpointB?: B): typeof css => {
+  return (strings: any, ...interpolations: any[]) => {
     if (breakpointA && breakpointB) {
       const pixelsA = getBreakpointPixels(breakpoints, breakpointA);
       const pixelsB = getBreakpointPixels(breakpoints, breakpointB);

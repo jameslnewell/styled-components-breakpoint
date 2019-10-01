@@ -1,12 +1,14 @@
 # styled-components-breakpoint
 
-![npm](https://img.shields.io/npm/v/styled-components-breakpoint.svg) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/styled-components-breakpoint.svg) ![npm](https://img.shields.io/npm/dm/styled-components-breakpoint.svg) [![Build Status](https://travis-ci.org/jameslnewell/styled-components-breakpoint.svg?branch=master)](https://travis-ci.org/jameslnewell/styled-components-breakpoint)
+![npm](https://img.shields.io/npm/v/styled-components-breakpoint.svg) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/styled-components-breakpoint.svg) ![npm](https://img.shields.io/npm/dm/styled-components-breakpoint.svg) [![Build Status]![GithubActions](https://github.com/jameslnewell/styled-components-breakpoint/workflows/main/badge.svg)](https://github.com/jameslnewell/styled-components-breakpoint/actions)
 
 Utility functions for creating breakpoints in `styled-components` 💅.
 
-> [Change log](https://github.com/jameslnewell/styled-components-breakpoint/blob/master/CHANGELOG.md)
+> 🕸 [Website](https://jameslnewell.github.io/styled-components-breakpoint/)
 
-> Have a look 👀 at [`styled-components-spacing`](https://github.com/jameslnewell/styled-components-spacing) and [`styled-components-grid`](https://github.com/jameslnewell/styled-components-grid) which both work well with this package.
+> 📘 [Change log](https://github.com/jameslnewell/styled-components-breakpoint/blob/master/CHANGELOG.md)
+
+> 👀 Have a look at [`styled-components-spacing`](https://github.com/jameslnewell/styled-components-spacing) and [`styled-components-grid`](https://github.com/jameslnewell/styled-components-grid) which both work well with this package.
 
 ## Installation
 
@@ -24,26 +26,7 @@ yarn add styled-components-breakpoint
 
 ## Usage
 
-`Heading.js`: Create a component using some breakpoints
-
-```jsx
-import styled from 'styled-components';
-import breakpoint from 'styled-components-breakpoint';
-
-export const Heading = styled.h1`
-  color: #444;
-  font-family: sans-serif;
-  font-size: 12px;
-
-  ${breakpoint('md')`
-    font-size: 16px;
-  `}
-
-  ${breakpoint('xl')`
-    font-size: 24px;
-  `}
-`;
-```
+### Using themable breakpoints
 
 `App.js`: Configure the breakpoints
 
@@ -69,6 +52,67 @@ ReactDOM.render(
   </ThemeProvider>,
   document.getElementById('app'),
 );
+```
+
+`Heading.js`: Create a component using the breakpoints
+
+```jsx
+import styled from 'styled-components';
+import breakpoint from 'styled-components-breakpoint';
+
+export const Heading = styled.h1`
+  color: #444;
+  font-family: sans-serif;
+  font-size: 12px;
+
+  ${breakpoint('md')`
+    font-size: 16px;
+  `}
+
+  ${breakpoint('xl')`
+    font-size: 24px;
+  `}
+`;
+```
+
+### Using static breakpoints
+
+`breakpoints.js`: Configure the breakpoints
+
+```jsx
+import {createBreakpoint, createMap} from 'styled-components-breakpoint';
+
+export const breakpoints = {
+  xs: 0,
+  sm: 300,
+  md: 600,
+  lg: 900,
+  xl: 1200,
+};
+
+export const breakpoint = createBreakpoint(breakpoints);
+export const map = createMap(breakpoints);
+```
+
+`Heading.js`: Create a component using the breakpoints
+
+```jsx
+import styled from 'styled-components';
+import {breakpoint} from './breakpoints';
+
+export const Heading = styled.h1`
+  color: #444;
+  font-family: sans-serif;
+  font-size: 12px;
+
+  ${breakpoint('md')`
+    font-size: 16px;
+  `}
+
+  ${breakpoint('xl')`
+    font-size: 24px;
+  `}
+`;
 ```
 
 ## API
@@ -123,11 +167,13 @@ const sizes = {
   lg: '20px',
 }
 
+const fontSize = ({size}) => map(size, s => `font-size: ${sizes[s]};`);
+
 export const Heading = styled.h1`
-  ${({size}) => map(size, s => `font-size: ${sizes[s]};`)}
+  ${fontSize}
 `;
 
-// font-size will remain the same size
+// font-size will always remain the same size
 <Heading size="sm">The quick brown fox jumps over the lazy dog</Heading>
 
 // font-size will increase/decrease with the window size
@@ -178,22 +224,15 @@ export const map = createMap({
 });
 ```
 
-### defaults
+## Default Breakpoints
 
-If you don't provide any breakpoints, the default breakpoints that are used by the `breakpoint()` and `map()` functions are are:
+If you don't provide any breakpoints, the default breakpoints used by the `breakpoint()` and `map()` functions are are:
 
-```js
-export const defaults = {
-  // targeting all devices
-  mobile: 0,
-
-  // targeting devices that are LARGER than the iPhone 6 Plus (which is 736px in landscape mode)
-  tablet: 737,
-
-  // targeting devices that are LARGER than the 11" iPad Pro (which is 1194px in landscape mode)
-  desktop: 1195,
-};
-```
+| Breakpoint | Size                   | Description                                                                                 |
+| ---------- | ---------------------- | ------------------------------------------------------------------------------------------- |
+| `mobile`   | `0px` (`0em`)          | Targeting all devices                                                                       |
+| `tablet`   | `737px` (`46.0625em`)  | Targeting devices that are LARGER than the iPhone 6 Plus (which is 736px in landscape mode) |
+| `desktop`  | `1195px` (`74.6875em`) | Targeting devices that are LARGER than the 11" iPad Pro (which is 1194px in landscape mode) |
 
 ## How to
 

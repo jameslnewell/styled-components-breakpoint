@@ -1,20 +1,22 @@
-import {DefaultTheme, FlattenSimpleInterpolation} from 'styled-components';
+import {DefaultTheme, css} from 'styled-components';
 
-export type Breakpoints<B extends string | number> = Record<B, number>;
+export type BreakpointMap<B extends string | number> = Record<B, number>;
 
-export type ValueOrValues<
+export type ValueOrValueMap<
   B extends string | number,
   V extends string | number
 > = V | Partial<Record<B, V>>;
 
-export type MapValueToStyleFunction = <V extends string | number>(
+export type ValueToStyleFunction = <V extends string | number>(
   value: V,
-) => string | FlattenSimpleInterpolation;
+) => string | ReturnType<typeof css>;
 
-type ThemeShape<B extends string | number> = {breakpoints: Breakpoints<B>};
+type ThemeShape<B extends string | number> = {breakpoints: BreakpointMap<B>};
 
-export type DefaultBreakpoint = 'mobile' | 'tablet' | 'desktop';
+export type DefaultBreakpointName = 'mobile' | 'tablet' | 'desktop';
 
-export type ThemeBreakpoint = DefaultTheme extends ThemeShape<infer B>
+export type DefaultThemeBreakpointName = DefaultTheme extends ThemeShape<
+  infer B
+>
   ? B
-  : DefaultBreakpoint;
+  : DefaultBreakpointName;

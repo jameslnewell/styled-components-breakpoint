@@ -2,7 +2,7 @@ import 'jest-styled-components';
 import * as React from 'react';
 import styled from 'styled-components';
 import {render} from '@testing-library/react';
-import {ValueOrValues, DefaultBreakpoint} from './types';
+import {ValueOrValueMap, DefaultBreakpointName} from './types';
 import {defaults} from './defaults';
 import {convertPxToEm} from './convertPxToEm';
 import {createMap} from './createMap';
@@ -11,7 +11,7 @@ describe('createMap()', () => {
   const map = createMap(defaults);
   const consoleWarnSpy = jest.spyOn(console, 'warn');
 
-  const Text = styled.p<{size: ValueOrValues<DefaultBreakpoint, number>}>`
+  const Text = styled.p<{size: ValueOrValueMap<DefaultBreakpointName, number>}>`
     ${({size}) => map(size, s => `font-size: ${s}px;`)}
   `;
 

@@ -1,6 +1,6 @@
-import {Breakpoints, DefaultBreakpoint} from './types';
+import {BreakpointMap, DefaultBreakpointName} from './types';
 
-export const defaults: Breakpoints<DefaultBreakpoint> = {
+export const defaults: BreakpointMap<DefaultBreakpointName> = {
   // targeting all devices
   mobile: 0,
 

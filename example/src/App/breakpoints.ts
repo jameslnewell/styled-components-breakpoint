@@ -1,14 +1,14 @@
-import {defaults, Breakpoints} from '../../../src';
+import {defaults, BreakpointMap} from '../../../src';
 
 export type DefaultBreakpoint = 'mobile' | 'tablet' | 'desktop';
 export type CustomBreakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type ExampleBreakpoint = DefaultBreakpoint | CustomBreakpoint;
 export type ExampleBreakpoints =
-  | Breakpoints<DefaultBreakpoint>
-  | Breakpoints<CustomBreakpoint>;
+  | BreakpointMap<DefaultBreakpoint>
+  | BreakpointMap<CustomBreakpoint>;
 
-export const defaultBreakpoints: Breakpoints<DefaultBreakpoint> = defaults;
-export const customBreakpoints: Breakpoints<CustomBreakpoint> = {
+export const defaultBreakpoints: BreakpointMap<DefaultBreakpoint> = defaults;
+export const customBreakpoints: BreakpointMap<CustomBreakpoint> = {
   xs: 0,
   sm: 576,
   md: 768,
