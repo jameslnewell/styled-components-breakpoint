@@ -25,10 +25,9 @@ export const breakpoint = (
   return (strings: any, ...interpolations: any[]) => {
     /* eslint-enable @typescript-eslint/no-explicit-any */
     return <P extends object>(props: StyledProps<P>) => {
-      return createBreakpoint(getThemeBreakpoints(props))(
-        breakpointA,
-        breakpointB,
-      )(strings, interpolations);
+      return createBreakpoint<DefaultThemeBreakpointName>(
+        getThemeBreakpoints(props),
+      )(breakpointA, breakpointB)(strings, interpolations);
     };
   };
 };

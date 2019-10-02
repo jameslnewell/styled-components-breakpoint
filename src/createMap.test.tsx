@@ -1,6 +1,6 @@
 import 'jest-styled-components';
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {render} from '@testing-library/react';
 import {ValueOrValueMap, DefaultBreakpointName} from './types';
 import {defaults} from './defaults';
@@ -40,5 +40,44 @@ describe('createMap()', () => {
     expect(consoleWarnSpy).toHaveBeenCalledWith(
       'styled-components-breakpoint: Values for {"tablet":16,"mobile":12,"desktop":24} are not keyed in order ("mobile", "tablet", "desktop") and may result in specificity issues.',
     );
+  });
+
+  test('returns a string', () => {
+    const ReturnsString = styled.p`
+      ${() => map('red', () => 'color: red;')}
+    `;
+    const {container} = render(<ReturnsString />);
+    expect(container.firstChild).toHaveStyleRule('color', 'red');
+  });
+
+  test('returns an object', () => {
+    const ReturnsObject = styled.p`
+      ${() => map('red', () => ({color: 'red'}))}
+    `;
+    const {container} = render(<ReturnsObject />);
+    expect(container.firstChild).toHaveStyleRule('color', 'red');
+  });
+
+  test('returns an interpolation', () => {
+    const ReturnsObject = styled.p`
+      ${() => map('red', c => `color: ${c};`)}
+    `;
+    const {container} = render(<ReturnsObject />);
+    expect(container.firstChild).toHaveStyleRule('color', 'red');
+  });
+
+  test('returns a CSS interpolation', () => {
+    const ReturnsCSS = styled.p`
+      ${() =>
+        map(
+          'red',
+          c =>
+            css`
+              color: ${c};
+            `,
+        )}
+    `;
+    const {container} = render(<ReturnsCSS />);
+    expect(container.firstChild).toHaveStyleRule('color', 'red');
   });
 });

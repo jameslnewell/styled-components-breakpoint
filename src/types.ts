@@ -1,10 +1,9 @@
-import {DefaultTheme, css} from 'styled-components';
+import {DefaultTheme, css, CSSObject} from 'styled-components';
 
 export type BreakpointNameConstraint = string | number | symbol;
-export type BreakpointMap<B extends BreakpointNameConstraint> = Record<
-  B,
-  number
->;
+export type BreakpointMap<B extends BreakpointNameConstraint> = {
+  [breakpoint in B]: number
+};
 type ThemeShape<B extends BreakpointNameConstraint> = {
   breakpoints: BreakpointMap<B>;
 };
@@ -13,11 +12,11 @@ export type ValueConstraint = string | number;
 export type ValueOrValueMap<
   B extends BreakpointNameConstraint,
   V extends ValueConstraint
-> = V | Partial<Record<B, V>>;
+> = V | {[breakpoint in B]?: V};
 
-export type ValueToStyleFunction = <V extends ValueConstraint>(
+export type ValueToStyleFunction<V extends ValueConstraint> = (
   value: V,
-) => string | ReturnType<typeof css>;
+) => string | CSSObject | ReturnType<typeof css>;
 
 export type DefaultBreakpointName = 'mobile' | 'tablet' | 'desktop';
 export type DefaultThemeBreakpointName = DefaultTheme extends ThemeShape<
@@ -35,5 +34,5 @@ export type MapFunction<
   V extends ValueConstraint
 > = (
   valueOrValues: ValueOrValueMap<B, V>,
-  mapValueToStyle: ValueToStyleFunction,
+  mapValueToStyle: ValueToStyleFunction<V>,
 ) => string | ReturnType<typeof css>;

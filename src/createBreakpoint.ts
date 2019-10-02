@@ -21,7 +21,7 @@ const getBreakpointSize = <B extends BreakpointNameConstraint>(
 
 export const createBreakpoint = <B extends BreakpointNameConstraint>(
   breakpoints: BreakpointMap<B>,
-): BreakpointFunction<B> => (breakpointA: B, breakpointB?: B): typeof css => {
+): BreakpointFunction<B> => (breakpointA, breakpointB) => {
   /* eslint-disable @typescript-eslint/no-explicit-any */
   return (strings: any, ...interpolations: any[]) => {
     /* eslint-enable @typescript-eslint/no-explicit-any */

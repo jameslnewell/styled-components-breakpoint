@@ -108,7 +108,7 @@ describe('createBreakpoint()', () => {
     });
   });
 
-  test('rendered styles using a nested fn', () => {
+  test('rendered styles using nested interpolations', () => {
     const color = (value: string) =>
       function<P>({theme}: StyledProps<P>) {
         return css`
