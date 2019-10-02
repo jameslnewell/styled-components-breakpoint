@@ -67,10 +67,10 @@ export const createMap = <
       if (val === undefined) return '';
       const style = mapValueToStyle(val);
       /* eslint-disable @typescript-eslint/ban-ts-ignore */
-      // @ts-ignore - ignore inability to create a real TemplateStringsArray
-      // @see https://github.com/microsoft/TypeScript/issues/17002
       return typeof style === 'string' || Array.isArray(style)
-        ? tag([], style)
+        ? // @ts-ignore - ignore inability to create a real TemplateStringsArray
+          // @see https://github.com/microsoft/TypeScript/issues/17002
+          tag([], style)
         : tag(style as CSSObject);
       /* eslint-enable @typescript-eslint/ban-ts-ignore */
     });
