@@ -66,13 +66,15 @@ export const createMap = <
       const val: V | undefined = valueOrValues[key];
       if (val === undefined) return '';
       const style = mapValueToStyle(val);
-      /* eslint-disable @typescript-eslint/ban-ts-ignore */
-      return typeof style === 'string' || Array.isArray(style)
-        ? // @ts-ignore - ignore inability to create a real TemplateStringsArray
-          // @see https://github.com/microsoft/TypeScript/issues/17002
-          tag([], style)
-        : tag(style as CSSObject);
-      /* eslint-enable @typescript-eslint/ban-ts-ignore */
+      if (typeof style === 'string' || Array.isArray(style)) {
+        /* eslint-disable @typescript-eslint/ban-ts-ignore */
+        // @ts-ignore - ignore inability to create a real TemplateStringsArray
+        return tag([], style);
+        /* eslint-enable @typescript-eslint/ban-ts-ignore */
+      } else {
+        // @see https://github.com/microsoft/TypeScript/issues/17002
+        return tag(style as CSSObject);
+      }
     });
   };
 };
