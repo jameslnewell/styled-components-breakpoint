@@ -1,14 +1,17 @@
 import {DefaultTheme, css, CSSObject, StyledProps} from 'styled-components';
 
 export type BreakpointNameConstraint = string | number | symbol;
+
 export type BreakpointMap<B extends BreakpointNameConstraint> = {
   [breakpoint in B]: number;
 };
+
 type ThemeShape<B extends BreakpointNameConstraint> = {
   breakpoints: BreakpointMap<B>;
 };
 
 export type DefaultBreakpointName = 'mobile' | 'tablet' | 'desktop';
+
 export type ThemedBreakpointName = DefaultTheme extends ThemeShape<infer B>
   ? B
   : DefaultBreakpointName;
@@ -28,10 +31,16 @@ export type ThemedBreakpointFunction<B extends BreakpointNameConstraint> = (
 // --- map() ---
 
 export type ValueConstraint = string | number;
+
 export type ValueOrValueMap<
   B extends BreakpointNameConstraint,
   V extends ValueConstraint
 > = V | {[breakpoint in B]?: V};
+
+export type ThemedValueOrValueMap<V extends ValueConstraint> = ValueOrValueMap<
+  ThemedBreakpointName,
+  V
+>;
 
 export type ValueToStyleFunction<V extends ValueConstraint> = (
   value: V,
