@@ -1,9 +1,16 @@
-import {BreakpointMap, ValueOrValueMap, ValueToStyleFunction} from './types';
+import {
+  BreakpointMap,
+  ValueOrValueMap,
+  ValueToStyleFunction,
+  BreakpointNameConstraint,
+  ValueConstraint,
+  MapFunction,
+} from './types';
 import {createBreakpoint} from './createBreakpoint';
 
 // ensure the values are keyed in breakpoint order, otherwise specificity issues may occur
 const checkValuesOrdering = <
-  B extends string | number,
+  B extends BreakpointNameConstraint,
   V extends string | number
 >(
   breakpoints: BreakpointMap<B>,
@@ -30,11 +37,14 @@ const checkValuesOrdering = <
 };
 
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-export const createMap = <B extends string | number>(
+export const createMap = <
+  B extends BreakpointNameConstraint,
+  V extends ValueConstraint
+>(
   breakpoints: BreakpointMap<B>,
-) => {
+): MapFunction<B, V> => {
   const fn = createBreakpoint(breakpoints);
-  return <V extends string | number>(
+  return (
     valueOrValues: ValueOrValueMap<B, V>,
     mapValueToStyle: ValueToStyleFunction,
   ) => {

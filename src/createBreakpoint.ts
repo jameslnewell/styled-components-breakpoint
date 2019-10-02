@@ -1,8 +1,12 @@
 import {css} from 'styled-components';
-import {BreakpointMap} from './types';
+import {
+  BreakpointMap,
+  BreakpointNameConstraint,
+  BreakpointFunction,
+} from './types';
 import {convertPxToEm} from './convertPxToEm';
 
-const getBreakpointPixels = <B extends string | number>(
+const getBreakpointSize = <B extends BreakpointNameConstraint>(
   breakpoints: BreakpointMap<B>,
   breakpoint: B,
 ): number => {
@@ -15,13 +19,15 @@ const getBreakpointPixels = <B extends string | number>(
   return breakpoints[breakpoint];
 };
 
-export const createBreakpoint = <B extends string | number>(
+export const createBreakpoint = <B extends BreakpointNameConstraint>(
   breakpoints: BreakpointMap<B>,
-) => (breakpointA: B, breakpointB?: B): typeof css => {
+): BreakpointFunction<B> => (breakpointA: B, breakpointB?: B): typeof css => {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   return (strings: any, ...interpolations: any[]) => {
+    /* eslint-enable @typescript-eslint/no-explicit-any */
     if (breakpointA && breakpointB) {
-      const pixelsA = getBreakpointPixels(breakpoints, breakpointA);
-      const pixelsB = getBreakpointPixels(breakpoints, breakpointB);
+      const pixelsA = getBreakpointSize(breakpoints, breakpointA);
+      const pixelsB = getBreakpointSize(breakpoints, breakpointB);
       return css`
         @media screen and (min-width: ${convertPxToEm(
             pixelsA,
@@ -30,7 +36,7 @@ export const createBreakpoint = <B extends string | number>(
         }
       `;
     } else {
-      const pixelsA = getBreakpointPixels(breakpoints, breakpointA);
+      const pixelsA = getBreakpointSize(breakpoints, breakpointA);
       if (pixelsA === 0) {
         return css(strings, ...interpolations);
       } else {

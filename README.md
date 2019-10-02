@@ -28,7 +28,7 @@ yarn add styled-components-breakpoint
 
 ### Using themable breakpoints
 
-`App.js`: Configure the breakpoints
+`App.js`: Configure the breakpoints (or just use the defaults)
 
 ```jsx
 import React from 'react';
