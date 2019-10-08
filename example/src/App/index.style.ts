@@ -1,10 +1,10 @@
 import styled, {css, createGlobalStyle} from 'styled-components';
 import {breakpoint, map, createBreakpoint, ValueOrValueMap} from '../../../src';
-import {defaultBreakpoints, ExampleBreakpoint} from './breakpoints';
+import {defaultBreakpoints, ExampleBreakpointName} from './breakpoints';
 
 const staticBreakpoint = createBreakpoint(defaultBreakpoints);
 
-export const Global = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   body {
     margin: auto;
     padding: 0 1em;
@@ -13,7 +13,7 @@ export const Global = createGlobalStyle`
     color: #444;
     font-size: 0.9em;
     font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-    
+
     ${staticBreakpoint('tablet')`
       font-size: 1em;
     `}
@@ -66,8 +66,8 @@ export const Instruction = styled.blockquote`
 `;
 
 export const Breakpoint = styled.div<{
-  gte: ExampleBreakpoint;
-  lt?: ExampleBreakpoint;
+  gte: ExampleBreakpointName;
+  lt?: ExampleBreakpointName;
   color: string;
 }>`
   display: flex;
@@ -86,7 +86,7 @@ export const Breakpoint = styled.div<{
 `;
 
 export interface BreakpointMapProps {
-  colorX: ValueOrValueMap<ExampleBreakpoint, string>;
+  colorX: ValueOrValueMap<ExampleBreakpointName, string>;
 }
 
 export const BreakpointMap = styled.div<BreakpointMapProps>`
@@ -105,7 +105,7 @@ export const BreakpointMap = styled.div<BreakpointMapProps>`
 `;
 
 export interface BreakpointTitleProps {
-  text?: ValueOrValueMap<ExampleBreakpoint, string>;
+  text?: ValueOrValueMap<ExampleBreakpointName, string>;
 }
 
 export const BreakpointTitle = styled.div<BreakpointTitleProps>`

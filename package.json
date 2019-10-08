@@ -1,6 +1,6 @@
 {
   "name": "styled-components-breakpoint",
-  "version": "3.0.0-preview.12",
+  "version": "3.0.0-preview.13",
   "description": "Utility functions for creating breakpoints in `styled-components` 💅.",
   "keywords": [
     "react",
@@ -58,7 +58,7 @@
     "build": "yarn run build:bundle && yarn run build:example",
     "test": "jest",
     "deploy": "gh-pages -d example/dist",
-    "start": "parcel example/src/index.html",
+    "start": "parcel example/src/index.html --out-dir example/dist",
     "prepublishOnly": "yarn run clean && yarn run check && yarn run build && yarn run test && yarn run deploy"
   },
   "husky": {

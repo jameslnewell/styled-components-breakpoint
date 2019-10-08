@@ -19,7 +19,7 @@ export const map = <V extends ValueConstraint>(
     const breakpoints: BreakpointMap<ThemedBreakpointName> =
       theme && theme.breakpoints ? theme.breakpoints : (defaults as any);
     /* eslint-enable @typescript-eslint/no-explicit-any */
-    return createMap<ThemedBreakpointName, V>(breakpoints)(
+    return createMap<ThemedBreakpointName>(breakpoints)(
       valueOrValues,
       mapValueToStyle,
     );

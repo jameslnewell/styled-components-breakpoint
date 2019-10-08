@@ -1,15 +1,15 @@
 import * as React from 'react';
 import {ThemeProvider} from 'styled-components';
 import {
-  ExampleBreakpoints,
-  ExampleBreakpoint,
+  ExampleBreakpointMapName,
+  ExampleBreakpointName,
   customBreakpoints,
   defaultBreakpoints,
   breakpointColors,
   breakpointTitles,
 } from './breakpoints';
 import {
-  Global,
+  GlobalStyle,
   Main,
   H1,
   Grid,
@@ -30,9 +30,9 @@ export type AppState = {
 };
 
 export const App: React.FC = () => {
-  const [breakpoints, setBreakpoints] = React.useState<ExampleBreakpoints>(
-    defaultBreakpoints,
-  );
+  const [breakpoints, setBreakpoints] = React.useState<
+    ExampleBreakpointMapName
+  >(defaultBreakpoints);
 
   const handleToggleBreakpoints = () =>
     setBreakpoints(breakpoints =>
@@ -41,16 +41,16 @@ export const App: React.FC = () => {
         : customBreakpoints,
     );
 
-  const names: ExampleBreakpoint[] = Object.keys(
+  const names: ExampleBreakpointName[] = Object.keys(
     breakpoints,
-  ) as ExampleBreakpoint[];
+  ) as ExampleBreakpointName[];
 
   const colors = names.reduce(
     (accum, name) => {
       accum[name] = breakpointColors[name];
       return accum;
     },
-    {} as Partial<{[b in ExampleBreakpoint]: string}>,
+    {} as Partial<{[b in ExampleBreakpointName]: string}>,
   );
 
   const titles = names.reduce(
@@ -58,13 +58,13 @@ export const App: React.FC = () => {
       accum[name] = breakpointTitles[name];
       return accum;
     },
-    {} as Partial<{[b in ExampleBreakpoint]: string}>,
+    {} as Partial<{[b in ExampleBreakpointName]: string}>,
   );
 
   return (
     <ThemeProvider theme={{breakpoints}}>
       <>
-        <Global />
+        <GlobalStyle />
         <Main>
           <H1>styled-components-breakpoint</H1>
 

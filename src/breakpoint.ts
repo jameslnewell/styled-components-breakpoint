@@ -11,7 +11,7 @@ type ThemedBreakpointMap = BreakpointMap<ThemedBreakpointName>;
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // casting because we can't really do anything better when the theme is defined but no theme values are defined
-const getThemeBreakpoints = <P extends object>({
+const getBreakpointsFromTheme = <P extends object>({
   theme,
 }: StyledProps<P>): ThemedBreakpointMap =>
   theme && theme.breakpoints ? theme.breakpoints : (defaults as any);
@@ -25,10 +25,9 @@ export const breakpoint = (
   return (strings: any, ...interpolations: any[]) => {
     /* eslint-enable @typescript-eslint/no-explicit-any */
     return <P extends object>(props: StyledProps<P>) => {
-      return createBreakpoint<ThemedBreakpointName>(getThemeBreakpoints(props))(
-        breakpointA,
-        breakpointB,
-      )(strings, interpolations);
+      return createBreakpoint<ThemedBreakpointName>(
+        getBreakpointsFromTheme(props),
+      )(breakpointA, breakpointB)(strings, interpolations);
     };
   };
 };

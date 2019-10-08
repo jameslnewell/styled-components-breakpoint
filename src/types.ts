@@ -26,7 +26,7 @@ export type BreakpointFunction<B extends BreakpointNameConstraint> = (
 export type ThemedBreakpointFunction<B extends BreakpointNameConstraint> = (
   breakpointA: B,
   breakpointB?: B,
-) => <P extends object>({theme}: StyledProps<P>) => typeof css;
+) => <P extends object>(props: StyledProps<P>) => typeof css;
 
 // --- map() ---
 
@@ -57,6 +57,6 @@ export type MapFunction<
 export type ThemedMapFunction<V extends ValueConstraint> = (
   valueOrValues: ValueOrValueMap<ThemedBreakpointName, V>,
   mapValueToStyle: ValueToStyleFunction<V>,
-) => <P extends object>({
-  theme,
-}: StyledProps<P>) => string | ReturnType<typeof css>;
+) => <P extends object>(
+  props: StyledProps<P>,
+) => string | ReturnType<typeof css>;

@@ -3,7 +3,7 @@ import {
   ValueOrValueMap,
   BreakpointNameConstraint,
   ValueConstraint,
-  MapFunction,
+  ValueToStyleFunction,
 } from './types';
 import {createBreakpoint} from './createBreakpoint';
 import {css, CSSObject} from 'styled-components';
@@ -37,14 +37,14 @@ const checkValuesOrdering = <
 };
 
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-export const createMap = <
-  B extends BreakpointNameConstraint,
-  V extends ValueConstraint
->(
+export const createMap = <B extends BreakpointNameConstraint>(
   breakpoints: BreakpointMap<B>,
-): MapFunction<B, V> => {
+) => {
   const fn = createBreakpoint<B>(breakpoints);
-  return (valueOrValues, mapValueToStyle) => {
+  return <V extends ValueConstraint>(
+    valueOrValues: ValueOrValueMap<B, V>,
+    mapValueToStyle: ValueToStyleFunction<V>,
+  ): string | ReturnType<typeof css> => {
     if (typeof valueOrValues !== 'object') {
       const style = mapValueToStyle(valueOrValues);
       // @see https://github.com/microsoft/TypeScript/issues/17002

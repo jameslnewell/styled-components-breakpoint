@@ -1,14 +1,18 @@
 import {defaults, BreakpointMap} from '../../../src';
 
-export type DefaultBreakpoint = 'mobile' | 'tablet' | 'desktop';
-export type CustomBreakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-export type ExampleBreakpoint = DefaultBreakpoint | CustomBreakpoint;
-export type ExampleBreakpoints =
-  | BreakpointMap<DefaultBreakpoint>
-  | BreakpointMap<CustomBreakpoint>;
+export type DefaultBreakpointName = 'mobile' | 'tablet' | 'desktop';
+export type CustomBreakpointName = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type ExampleBreakpointName =
+  | DefaultBreakpointName
+  | CustomBreakpointName;
+export type ExampleBreakpointMapName =
+  | BreakpointMap<DefaultBreakpointName>
+  | BreakpointMap<CustomBreakpointName>;
 
-export const defaultBreakpoints: BreakpointMap<DefaultBreakpoint> = defaults;
-export const customBreakpoints: BreakpointMap<CustomBreakpoint> = {
+export const defaultBreakpoints: BreakpointMap<
+  DefaultBreakpointName
+> = defaults;
+export const customBreakpoints: BreakpointMap<CustomBreakpointName> = {
   xs: 0,
   sm: 576,
   md: 768,
@@ -17,7 +21,7 @@ export const customBreakpoints: BreakpointMap<CustomBreakpoint> = {
 };
 
 export const breakpointTitles: Record<
-  DefaultBreakpoint | CustomBreakpoint,
+  DefaultBreakpointName | CustomBreakpointName,
   string
 > = {
   mobile: 'Mobile',
@@ -31,7 +35,7 @@ export const breakpointTitles: Record<
 };
 
 export const breakpointColors: Record<
-  DefaultBreakpoint | CustomBreakpoint,
+  DefaultBreakpointName | CustomBreakpointName,
   string
 > = {
   mobile: '#D7F2BA',
