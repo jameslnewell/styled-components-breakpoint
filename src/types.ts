@@ -42,21 +42,25 @@ export type ThemedValueOrValueMap<V extends ValueConstraint> = ValueOrValueMap<
   V
 >;
 
-export type ValueToStyleFunction<V extends ValueConstraint> = (
-  value: V,
-) => string | CSSObject | ReturnType<typeof css>;
+export interface ValueToStyleFunction<V extends ValueConstraint> {
+  (value: V): string | CSSObject | ReturnType<typeof css>;
+}
 
-export type MapFunction<
+export interface MapFunction<
   B extends BreakpointNameConstraint,
   V extends ValueConstraint
-> = (
-  valueOrValues: ValueOrValueMap<B, V>,
-  mapValueToStyle: ValueToStyleFunction<V>,
-) => string | ReturnType<typeof css>;
+> {
+  (
+    valueOrValues: ValueOrValueMap<B, V>,
+    mapValueToStyle: ValueToStyleFunction<V>,
+  ): string | ReturnType<typeof css>;
+}
 
-export type ThemedMapFunction<V extends ValueConstraint> = (
-  valueOrValues: ValueOrValueMap<ThemedBreakpointName, V>,
-  mapValueToStyle: ValueToStyleFunction<V>,
-) => <P extends object>(
-  props: StyledProps<P>,
-) => string | ReturnType<typeof css>;
+export interface ThemedMapFunction<V extends ValueConstraint> {
+  (
+    valueOrValues: ValueOrValueMap<ThemedBreakpointName, V>,
+    mapValueToStyle: ValueToStyleFunction<V>,
+  ): <P extends object>(
+    props: StyledProps<P>,
+  ) => string | ReturnType<typeof css>;
+}
