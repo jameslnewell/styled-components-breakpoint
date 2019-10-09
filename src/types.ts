@@ -30,7 +30,7 @@ export type ThemedBreakpointFunction<B extends BreakpointNameConstraint> = (
 
 // --- map() ---
 
-export type ValueConstraint = string | number;
+export type ValueConstraint = string | number | boolean;
 
 export type ValueOrValueMap<
   B extends BreakpointNameConstraint,
