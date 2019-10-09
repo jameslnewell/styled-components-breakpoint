@@ -26,81 +26,93 @@ yarn add styled-components-breakpoint
 
 ## Usage
 
-### Using themable breakpoints
+### Using the themable mixins
 
-`App.js`: Configure the breakpoints (or just use the defaults)
+```jsx
+import styled from 'styled-components';
+import breakpoint, {map} from 'styled-components-breakpoint';
+
+const Heading = styled.h1`
+  color: #444;
+  font-family: sans-serif;
+  font-size: 12px;
+
+  ${breakpoint('md')`
+    font-size: 16px;
+  `}
+
+  ${breakpoint('xl')`
+    font-size: 24px;
+  `}
+
+  ${map({mobile: 'red', desktop: 'green'}, color => `color: ${color};`)}
+
+`;
+```
+
+### Using custom breakpoints for the themable mixins
+
+The themable breakpoints can be customised using `ThemeProvider`. For example, to use the same breakpoints as [Bootstrap](https://getbootstrap.com/docs/4.0/layout/overview/#responsive-breakpoints), you can do so like this:
 
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {ThemeProvider} from 'styled-components';
-import {Heading} from './Heading';
 
 const theme = {
   breakpoints: {
     xs: 0,
-    sm: 300,
-    md: 600,
-    lg: 900,
+    sm: 576,
+    md: 768,
+    lg: 992,
     xl: 1200,
   },
 };
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <Heading>Hello World!</Heading>
-  </ThemeProvider>,
+  <ThemeProvider theme={theme}>{/* ... */}</ThemeProvider>,
   document.getElementById('app'),
 );
 ```
 
-`Heading.js`: Create a component using the breakpoints
+If you're using Typescript, you'll also need to define the breakpoints and spacings on the theme.
 
-```jsx
-import styled from 'styled-components';
-import breakpoint from 'styled-components-breakpoint';
+`styled.d.ts`
 
-export const Heading = styled.h1`
-  color: #444;
-  font-family: sans-serif;
-  font-size: 12px;
+```tsx
+import {DefaultTheme} from 'styled-components';
 
-  ${breakpoint('md')`
-    font-size: 16px;
-  `}
-
-  ${breakpoint('xl')`
-    font-size: 24px;
-  `}
-`;
+declare module 'styled-components' {
+  export interface DefaultTheme {
+    breakpoints: {
+      [name in 'xs' | 'sm' | 'md' | 'lg' | 'xl']: number;
+    };
+  }
+}
 ```
 
-### Using static breakpoints
+### Using the mixin factories
+
+If your breakpoints and spacings don't need to be themable then you can use the static mixin factories.
 
 `breakpoints.js`: Configure the breakpoints
 
 ```jsx
+import styled from 'styled-components';
 import {createBreakpoint, createMap} from 'styled-components-breakpoint';
 
-export const breakpoints = {
+const breakpoints = {
   xs: 0,
-  sm: 300,
-  md: 600,
-  lg: 900,
+  sm: 576,
+  md: 768,
+  lg: 992,
   xl: 1200,
 };
 
-export const breakpoint = createBreakpoint(breakpoints);
-export const map = createMap(breakpoints);
-```
+const breakpoint = createBreakpoint(breakpoints);
+const map = createMap(breakpoints);
 
-`Heading.js`: Create a component using the breakpoints
-
-```jsx
-import styled from 'styled-components';
-import {breakpoint} from './breakpoints';
-
-export const Heading = styled.h1`
+const Heading = styled.h1`
   color: #444;
   font-family: sans-serif;
   font-size: 12px;
@@ -112,6 +124,9 @@ export const Heading = styled.h1`
   ${breakpoint('xl')`
     font-size: 24px;
   `}
+
+  ${map({md: 'red', xl: 'green'}, color => `color: ${color};`)}
+
 `;
 ```
 
@@ -119,7 +134,7 @@ export const Heading = styled.h1`
 
 ### breakpoint(a, b)
 
-Generate a media query using using the set of breakpoints defined in the `styled-components` theme.
+Generate a media query using using the set of breakpoints defined in the theme.
 
 **Parameters:**
 
@@ -148,7 +163,7 @@ export const Heading = styled.h1`
 
 ### map(valueOrValues, mapValueToStyle)
 
-Map a set of values to a set of media queries using the set of breakpoints defined in the `styled-components` theme.
+Map a set of values to a set of media queries using the set of breakpoints defined in the theme.
 
 **Parameters:**
 
@@ -224,70 +239,12 @@ export const map = createMap({
 });
 ```
 
-## Default Breakpoints
+## Default breakpoints
 
-If you don't provide any breakpoints, the default breakpoints used by the `breakpoint()` and `map()` functions are are:
+If you don't provide any breakpoints, the default breakpoints used by the `breakpoint()` and `map()` functions are:
 
 | Breakpoint | Size                   | Description                                                                                 |
 | ---------- | ---------------------- | ------------------------------------------------------------------------------------------- |
 | `mobile`   | `0px` (`0em`)          | Targeting all devices                                                                       |
 | `tablet`   | `737px` (`46.0625em`)  | Targeting devices that are LARGER than the iPhone 6 Plus (which is 736px in landscape mode) |
 | `desktop`  | `1195px` (`74.6875em`) | Targeting devices that are LARGER than the 11" iPad Pro (which is 1194px in landscape mode) |
-
-## How to
-
-### Using Typescript
-
-[Follow the `styled-components` documentation for setting up a theme](https://www.styled-components.com/docs/api#typescript). Be sure to include some breakpoints in the type definition!
-
-1. Create the declaration file:
-
-   `styled.d.ts`
-
-   ```tsx
-   import {DefaultTheme} from 'styled-components';
-
-   declare module 'styled-components' {
-     export interface DefaultTheme {
-       breakpoints: {
-         [name in 'xs' | 'sm' | 'md' | 'lg' | 'xl']: number;
-       };
-     }
-   }
-   ```
-
-2. Create the theme:
-
-   `theme.ts`
-
-   ```tsx
-   import {DefaultTheme} from 'styled-components';
-
-   export const theme: DefaultTheme = {
-     breakpoints: {
-       xs: 0,
-       sm: 300,
-       md: 600,
-       lg: 900,
-       xl: 1200,
-     },
-   };
-   ```
-
-3. Use the theme in your application:
-
-   `App.js`
-
-   ```jsx
-   import React from 'react';
-   import ReactDOM from 'react-dom';
-   import {ThemeProvider} from 'styled-components';
-   import {theme} from './theme';
-
-   ReactDOM.render(
-     <ThemeProvider theme={theme}>
-       {/* other components go here */}
-     </ThemeProvider>,
-     document.getElementById('app'),
-   );
-   ```
