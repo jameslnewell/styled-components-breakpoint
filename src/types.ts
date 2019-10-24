@@ -46,18 +46,15 @@ export interface ValueToStyleFunction<V extends ValueConstraint> {
   (value: V): string | CSSObject | ReturnType<typeof css>;
 }
 
-export interface MapFunction<
-  B extends BreakpointNameConstraint,
-  V extends ValueConstraint
-> {
-  (
+export interface MapFunction<B extends BreakpointNameConstraint> {
+  <V extends ValueConstraint>(
     valueOrValues: ValueOrValueMap<B, V>,
     mapValueToStyle: ValueToStyleFunction<V>,
   ): string | ReturnType<typeof css>;
 }
 
-export interface ThemedMapFunction<V extends ValueConstraint> {
-  (
+export interface ThemedMapFunction {
+  <V extends ValueConstraint>(
     valueOrValues: ValueOrValueMap<ThemedBreakpointName, V>,
     mapValueToStyle: ValueToStyleFunction<V>,
   ): <P extends object>(
