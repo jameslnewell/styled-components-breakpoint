@@ -50,6 +50,18 @@ export interface MapFunction<B extends BreakpointNameConstraint> {
   <V extends ValueConstraint>(
     valueOrValues: ValueOrValueMap<B, V>,
     mapValueToStyle: ValueToStyleFunction<V>,
+  ):
+    | string
+    | ReturnType<typeof css>
+    | (<P extends object>(
+        props: StyledProps<P>,
+      ) => string | ReturnType<typeof css>);
+}
+
+export interface StaticMapFunction<B extends BreakpointNameConstraint> {
+  <V extends ValueConstraint>(
+    valueOrValues: ValueOrValueMap<B, V>,
+    mapValueToStyle: ValueToStyleFunction<V>,
   ): string | ReturnType<typeof css>;
 }
 
