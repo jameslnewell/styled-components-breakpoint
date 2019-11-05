@@ -67,7 +67,6 @@ export const App: React.FC = () => {
         <GlobalStyle />
         <Main>
           <H1>styled-components-breakpoint</H1>
-
           <Grid>
             <Col1>
               <Button onClick={handleToggleBreakpoints}>

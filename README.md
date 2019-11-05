@@ -248,3 +248,27 @@ If you don't provide any breakpoints, the default breakpoints used by the `break
 | `mobile`   | `0px` (`0em`)          | Targeting all devices                                                                       |
 | `tablet`   | `737px` (`46.0625em`)  | Targeting devices that are LARGER than the iPhone 6 Plus (which is 736px in landscape mode) |
 | `desktop`  | `1195px` (`74.6875em`) | Targeting devices that are LARGER than the 11" iPad Pro (which is 1194px in landscape mode) |
+
+## FAQ
+
+### Q. How do I use CSS objects?
+
+```jsx
+import styled from 'styled-components';
+import breakpoint from 'styled-components-breakpoint';
+
+const RainbowButton = styled.button(
+  {
+    color: 'white',
+    backgroundColor: 'red',
+  },
+  breakpoint('tablet')({
+    backgroundColor: 'blue',
+  }),
+  breakpoint('desktop')({
+    backgroundColor: 'green',
+  }),
+);
+
+<RainbowButton>I am RGB!</RainbowButton>;
+```
