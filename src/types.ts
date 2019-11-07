@@ -31,6 +31,7 @@ export type ThemedBreakpointFunction<B extends BreakpointNameConstraint> = (
 // --- map() ---
 
 export type ValueConstraint = string | number | boolean;
+export type ScaleConstraint = {[name: string]: any};
 
 export type ValueOrValueMap<
   B extends BreakpointNameConstraint,
@@ -42,34 +43,24 @@ export type ThemedValueOrValueMap<V extends ValueConstraint> = ValueOrValueMap<
   V
 >;
 
-export interface ValueToStyleFunction<V extends ValueConstraint> {
-  (value: V): string | CSSObject | ReturnType<typeof css>;
+export interface ValueToStyleFunction<
+  V extends ValueConstraint,
+  S extends ScaleConstraint
+> {
+  (value: V, scale?: S): string | CSSObject | ReturnType<typeof css>;
 }
 
 export interface MapFunction<B extends BreakpointNameConstraint> {
   <V extends ValueConstraint>(
     valueOrValues: ValueOrValueMap<B, V>,
-    mapValueToStyle: ValueToStyleFunction<V>,
-  ):
-    | string
-    | ReturnType<typeof css>
-    | (<P extends object>(
-        props: StyledProps<P>,
-      ) => string | ReturnType<typeof css>);
-}
-
-export interface StaticMapFunction<B extends BreakpointNameConstraint> {
-  <V extends ValueConstraint>(
+    mapValueToStyle: (value: V) => string | CSSObject | ReturnType<typeof css>,
+  ): any;
+  <V extends ValueConstraint, S extends ScaleConstraint>(
     valueOrValues: ValueOrValueMap<B, V>,
-    mapValueToStyle: ValueToStyleFunction<V>,
-  ): string | ReturnType<typeof css>;
-}
-
-export interface ThemedMapFunction {
-  <V extends ValueConstraint>(
-    valueOrValues: ValueOrValueMap<ThemedBreakpointName, V>,
-    mapValueToStyle: ValueToStyleFunction<V>,
-  ): <P extends object>(
-    props: StyledProps<P>,
-  ) => string | ReturnType<typeof css>;
+    mapValueToStyle: (
+      value: V,
+      scale: S,
+    ) => string | CSSObject | ReturnType<typeof css>,
+    scale: S | ((theme: DefaultTheme) => S),
+  ): any;
 }
