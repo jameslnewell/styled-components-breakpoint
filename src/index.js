@@ -21,9 +21,9 @@ type ComponentProps = {
   }
 };
 
-function breakpoint(gte: string, lt?: string) {
+function breakpoint<T = {}>(gte: string, lt?: string) {
   return function (strings: string[], ...interpolations: StyledComponentsInterpolation[]) {
-    return function ({ theme = {} }: ComponentProps) {
+    return function ({ theme = {} }: T & ComponentProps) {
       return _breakpoint(theme.breakpoints || defaultBreakpoints, gte, lt)(strings, ...interpolations);
     };
   };
